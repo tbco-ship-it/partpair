@@ -25,7 +25,10 @@
     }
     function open(q) {
       const nq = norm(q);
-      items = (nq ? list.filter(x => norm(x.name).includes(nq)) : list).slice(0, 8);
+      const tokens = x => x.name.toLowerCase().split(/[\s-]+/).map(norm);
+      items = (nq ? list.filter(x => norm(x.name).includes(nq))
+                      .sort((a, b) => rank(a) - rank(b)) : list).slice(0, 8);
+      function rank(x) { const t = tokens(x); if (t.includes(nq)) return 0; if (t.some(k => k.startsWith(nq))) return 1; return 2; }
       menu.innerHTML = items.length
         ? items.map((x, i) => `<li role="option" data-i="${i}" ${i === active ? 'aria-selected="true"' : ''}>${x.name}</li>`).join('')
         : '<li class="empty">No match. Try a model number like 5600 or 4070.</li>';
