@@ -12,11 +12,11 @@
 
 <section class="calc card" id="calc">
   <div class="row">
-    <label>CPU
-      <select id="cpu">{% for c in cpus %}<option value="{{ c.slug }}">{{ c.name }}</option>{% endfor %}</select>
+    <label class="field">CPU
+      <input id="cpu" class="pick" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" spellcheck="false" placeholder="Type a processor, e.g. 7800X3D" data-kind="cpus"><ul class="menu" id="cpu-menu" role="listbox" hidden></ul>
     </label>
-    <label>GPU
-      <select id="gpu">{% for g in gpus %}<option value="{{ g.slug }}">{{ g.name }}</option>{% endfor %}</select>
+    <label class="field">GPU
+      <input id="gpu" class="pick" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" spellcheck="false" placeholder="Type a graphics card, e.g. RTX 4070" data-kind="gpus"><ul class="menu" id="gpu-menu" role="listbox" hidden></ul>
     </label>
   </div>
   <div class="seg" role="radiogroup" aria-label="Resolution">

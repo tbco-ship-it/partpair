@@ -6,8 +6,8 @@
 <p class="prose">Select your parts. We add the CPU's maximum turbo power, the GPU's board power and about 100 W for the rest of the system, then apply 30% headroom and round up to a common PSU size.</p>
 <section class="calc card">
   <div class="row">
-    <label>CPU<select id="cpu">{% for c in cpus %}<option value="{{ c.slug }}">{{ c.name }}</option>{% endfor %}</select></label>
-    <label>GPU<select id="gpu">{% for g in gpus %}<option value="{{ g.slug }}">{{ g.name }}</option>{% endfor %}</select></label>
+    <label class="field">CPU<input id="cpu" class="pick" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" spellcheck="false" placeholder="Type a processor, e.g. 7800X3D" data-kind="cpus"><ul class="menu" id="cpu-menu" role="listbox" hidden></ul></label>
+    <label class="field">GPU<input id="gpu" class="pick" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" spellcheck="false" placeholder="Type a graphics card, e.g. RTX 4070" data-kind="gpus"><ul class="menu" id="gpu-menu" role="listbox" hidden></ul></label>
   </div>
   <div id="psu-result" class="result" aria-live="polite"></div>
 </section>
