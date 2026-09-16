@@ -1,5 +1,5 @@
 (async function () {
-  const base = document.querySelector('link[rel=stylesheet]').getAttribute('href').replace('static/style.css', '');
+  const base = document.querySelector('link[href$="static/style.css"]').getAttribute('href').replace('static/style.css', '');
   const data = await (await fetch(base + 'static/parts.json')).json();
   const RES = { '1080p': [45, 0.62], '1440p': [40, 0.60], '4k': [30, 0.50] };
   const TIERS = [450, 550, 650, 750, 850, 1000, 1200, 1600];
