@@ -508,3 +508,19 @@ header.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;just
 @media (prefers-color-scheme:dark){.calc-grid .card,.list{background:var(--surface);border-color:var(--line)}.calc-grid .pick,.calc-grid .num-in,.money{background:var(--surface-2)}.calc-grid .pick:focus,.calc-grid .num-in:focus,.money:focus-within{background:var(--surface)}}
 .calc .row+.row,.calc .row+details,.calc details+.row{margin-top:16px}
 .tbl tr:last-child th,.tbl tr:last-child td{border-bottom:none}
+
+/* Table typography — label/value rhythm */
+.tbl{font-size:.95rem}
+.tbl thead th{font-size:.82rem;font-weight:600;color:var(--muted);padding:10px 12px 12px;letter-spacing:0}
+.tbl tbody th{font-weight:500;color:var(--text-2)}
+.tbl tbody td{font-weight:600;color:var(--text);font-feature-settings:"tnum";white-space:nowrap}
+.tbl tbody td:first-child,.tbl tbody th:first-child{white-space:normal}
+.tbl td a{color:var(--text);font-weight:600}.tbl td a:hover{color:var(--blue)}
+.tbl.spec th{font-weight:500;color:var(--text-2);width:52%}
+.tbl.mini th{font-weight:500;color:var(--text-2);font-size:.95rem}
+.tbl.mini td{font-size:1rem}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--text-2);font-size:.78rem;font-weight:600;margin-left:6px;vertical-align:middle;letter-spacing:0}
+.sheet .pill{background:rgba(0,0,0,.06)}
+@media (prefers-color-scheme:dark){.sheet .pill{background:rgba(255,255,255,.1)}}
+.list .meta{font-weight:600;color:var(--text-2)}
+.v-balanced,.v-mild,.v-gpu-bound,.v-moderate,.v-overkill,.v-severe{font-weight:600}
