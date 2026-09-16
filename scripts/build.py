@@ -15,7 +15,7 @@ from model import RESOLUTIONS, bottleneck, gpu_res_scores, psu_watts, short, slu
 
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
-SITE = "PartPair"
+SITE = "PCPairs"
 
 
 def load():
@@ -68,7 +68,8 @@ def neighbours(items, item, n=4):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--base", default="/")
-    ap.add_argument("--origin", default="https://tbco-ship-it.github.io")
+    ap.add_argument("--origin", default="https://pcpairs.com")
+    ap.add_argument("--cname", default="pcpairs.com")
     args = ap.parse_args()
     base = args.base if args.base.endswith("/") else args.base + "/"
     origin = args.origin.rstrip("/")
@@ -168,6 +169,8 @@ def main():
     (DIST / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {origin}{base}sitemap.xml\n")
     (DIST / "404.html").write_text(env.get_template("404.html").render(path="404"))
     (DIST / ".nojekyll").write_text("")
+    if args.cname:
+        (DIST / "CNAME").write_text(args.cname + "\n")
     print(f"built {len(urls)} pages -> {DIST}")
 
 

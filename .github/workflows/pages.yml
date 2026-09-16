@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install jinja2
-      - run: python scripts/build.py --base /partpair/ --origin https://tbco-ship-it.github.io
+      - run: python scripts/build.py --base / --origin https://pcpairs.com
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
