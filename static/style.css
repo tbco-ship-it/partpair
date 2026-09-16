@@ -535,3 +535,6 @@ header.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;just
 .calc-grid .seg input:checked+span{background:var(--bg);color:var(--blue);box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .beam-fill{background:var(--blue)}
 .beam.cpu .beam-label:first-child,.beam.gpu .beam-label:last-child{color:var(--text)}
+.sheet-actions{display:flex;gap:10px;flex-wrap:wrap}
+.sheet-actions .next{flex:1 1 180px;justify-content:center;text-align:center}
+.hero h1{max-width:none}
