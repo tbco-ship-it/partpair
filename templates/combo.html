@@ -16,7 +16,7 @@
 
 <section class="sheet {{ m.verdict }}">
   <div class="sheet-num"><span class="num" data-count="{{ m.pct }}">{{ m.pct }}</span><span class="pct">%</span></div>
-  <p class="sheet-title">{% if m.pct < 3 %}Evenly matched at 1440p.{% elif m.verdict == 'balanced' %}Balanced at 1440p.{% else %}{{ m.side }}-limited at 1440p. {{ m.verdict_label|capitalize }}.{% endif %}</p>
+  <p class="sheet-title">{% if m.pct < 3 %}Evenly matched at 1440p.{% elif m.verdict == 'balanced' %}Balanced at 1440p.{% else %}{{ m.side }}-limited at 1440p. {{ m.verdict_label[0]|upper }}{{ m.verdict_label[1:] }}.{% endif %}</p>
   <div class="beam {{ 'cpu' if m.side == 'CPU' else 'gpu' }}" role="img" aria-label="{{ m.side }} is the limiting part by {{ m.pct }} percent">
     <span class="beam-label">CPU</span>
     <span class="beam-track"><span class="beam-fill" style="width:{{ m.pct / 2 }}%"></span></span>
