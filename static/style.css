@@ -547,3 +547,8 @@ header.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;just
 .list a{padding:0 2px;min-height:56px}
 .sec-h{padding:0 2px;margin-bottom:6px}
 @media (prefers-color-scheme:dark){.list{background:transparent;border:0}}
+
+/* Scroll reveal (restrained) */
+.reveal{opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
+.reveal.is-in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
