@@ -16,17 +16,17 @@
 <h2>Which CPU each card class needs</h2>
 <p>The table below is computed from the model: for representative cards from the top of our database to the bottom, the gaming index the CPU needs at each resolution, and the cheapest CPU in our database that reaches it. Anything faster is fine; anything much slower shows a CPU-side score.</p>
 </div>
-<table class="tbl"><thead><tr><th>Graphics card</th>{% for key, label, a, b in resolutions %}<th>{{ label }} — CPU needed</th>{% endfor %}</tr></thead><tbody>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Graphics card</th>{% for key, label, a, b in resolutions %}<th>{{ label }} — CPU needed</th>{% endfor %}</tr></thead><tbody>
 {% for r in needed_rows %}<tr><td><a href="{{ base }}gpu/{{ r.gpu.slug }}/">{{ r.gpu.short }}</a></td>{% for key, label, a, b in resolutions %}<td><a href="{{ base }}cpu/{{ r.res[key].cpu.slug }}/">{{ r.res[key].cpu.short }}</a> <small class="muted">(index {{ r.res[key].needed }})</small></td>{% endfor %}</tr>{% endfor %}
-</tbody></table>
+</tbody></table></div>
 <div class="prose">
 <p>Read it column by column. Going from 1080p to 4K, the CPU requirement drops by roughly a third for the fastest cards. That is the whole argument for pairing a top card with a mid-range CPU when you play at 4K, and against doing so at 1080p.</p>
 <h2>Balanced pairs at 1440p</h2>
 <p>1440p is the most common target for a new build, so here is the band of CPUs that score "balanced" with each card class at that resolution. The low end of the band is the value pick; the high end is where spending more on the CPU stops changing the result.</p>
 </div>
-<table class="tbl"><thead><tr><th>Graphics card</th><th>Balanced from</th><th>up to</th></tr></thead><tbody>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Graphics card</th><th>Balanced from</th><th>up to</th></tr></thead><tbody>
 {% for b in bal %}<tr><td><a href="{{ base }}gpu/{{ b.gpu.slug }}/">{{ b.gpu.short }}</a></td><td><a href="{{ base }}cpu/{{ b.lo.slug }}/">{{ b.lo.short }}</a></td><td><a href="{{ base }}cpu/{{ b.hi.slug }}/">{{ b.hi.short }}</a></td></tr>{% endfor %}
-</tbody></table>
+</tbody></table></div>
 <div class="prose">
 <h2>What the score does not know</h2>
 <p>The model uses average gaming performance. Simulation and strategy games (Factorio, Stellaris, Microsoft Flight Simulator) lean far harder on the CPU than the average; esports shooters at 240 Hz do too. Memory speed, background software and the specific game engine all move the real number. Treat the score as the starting point for a decision, then check a benchmark of the game you actually play. <a href="{{ base }}">Run your own pair through the calculator</a>.</p>

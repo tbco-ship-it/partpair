@@ -575,3 +575,5 @@ header.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;just
 /* ---- CWV: reserve result space (CLS), underline prose links (a11y) ---- */
 .result:empty{min-height:380px;border-radius:var(--r-sheet);background:var(--surface)}
 .prose a,.sheet-text a,footer a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:color-mix(in srgb,currentColor 40%,transparent)}
+
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.4em -20px;padding:0 20px}.tbl-wrap .tbl{min-width:560px}

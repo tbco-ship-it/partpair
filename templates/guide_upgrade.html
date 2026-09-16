@@ -17,9 +17,9 @@
 <h2>Where the CPU stops mattering</h2>
 <p>For each graphics-card class this is the CPU band that scores "balanced" at 1440p. If you are inside the band, a CPU upgrade changes little; put the money into the card or the monitor.</p>
 </div>
-<table class="tbl"><thead><tr><th>Graphics card</th><th>Balanced from</th><th>up to</th></tr></thead><tbody>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Graphics card</th><th>Balanced from</th><th>up to</th></tr></thead><tbody>
 {% for b in bal %}<tr><td><a href="{{ base }}gpu/{{ b.gpu.slug }}/">{{ b.gpu.short }}</a></td><td><a href="{{ base }}cpu/{{ b.lo.slug }}/">{{ b.lo.short }}</a></td><td><a href="{{ base }}cpu/{{ b.hi.slug }}/">{{ b.hi.short }}</a></td></tr>{% endfor %}
-</tbody></table>
+</tbody></table></div>
 <div class="prose">
 <h2>Three cases where the answer is neither</h2>
 <ul>
