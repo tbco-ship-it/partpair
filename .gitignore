@@ -2,3 +2,4 @@
 .preview/
 __pycache__/
 dist/
+.keys/

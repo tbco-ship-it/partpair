@@ -169,6 +169,8 @@ def main():
     (DIST / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {origin}{base}sitemap.xml\n")
     (DIST / "404.html").write_text(env.get_template("404.html").render(path="404"))
     (DIST / ".nojekyll").write_text("")
+    key = (ROOT / "static/indexnow-key.txt").read_text().strip()
+    (DIST / f"{key}.txt").write_text(key + "\n")
     if args.cname:
         (DIST / "CNAME").write_text(args.cname + "\n")
     print(f"built {len(urls)} pages -> {DIST}")
