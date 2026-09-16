@@ -10,20 +10,23 @@
   <p>Pick a processor and a graphics card. You get one number: how much one holds the other back at your resolution, and the power supply the pair needs.</p>
 </section>
 
-<section class="calc card" id="calc">
-  <div class="row">
-    <label class="field">CPU
-      <input id="cpu" class="pick" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" spellcheck="false" placeholder="Type a processor, e.g. 7800X3D" data-kind="cpus"><ul class="menu" id="cpu-menu" role="listbox" hidden></ul>
-    </label>
-    <label class="field">GPU
-      <input id="gpu" class="pick" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" spellcheck="false" placeholder="Type a graphics card, e.g. RTX 4070" data-kind="gpus"><ul class="menu" id="gpu-menu" role="listbox" hidden></ul>
-    </label>
+<section class="calc-grid">
+<div class="calc card" id="calc">
+  <h2 class="card-title">Your build</h2>
+  <label class="field">Processor
+    <input id="cpu" class="pick search" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" spellcheck="false" placeholder="Type a processor, e.g. 7800X3D" data-kind="cpus"><ul class="menu" id="cpu-menu" role="listbox" hidden></ul>
+  </label>
+  <label class="field">Graphics card
+    <input id="gpu" class="pick search" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" spellcheck="false" placeholder="Type a graphics card, e.g. RTX 4070" data-kind="gpus"><ul class="menu" id="gpu-menu" role="listbox" hidden></ul>
+  </label>
+  <div class="field"><span class="field-label">Resolution</span>
+    <div class="seg full" role="radiogroup" aria-label="Resolution">
+      {% for r in resolutions %}<label><input type="radio" name="res" value="{{ r[0] }}" {% if r[0]=='1440p' %}checked{% endif %}><span>{{ r[1] }}</span></label>{% endfor %}
+    </div>
   </div>
-  <div class="seg" role="radiogroup" aria-label="Resolution">
-    {% for r in resolutions %}<label><input type="radio" name="res" value="{{ r[0] }}" {% if r[0]=='1440p' %}checked{% endif %}><span>{{ r[1] }}</span></label>{% endfor %}
-  </div>
-  <div id="result" class="result" aria-live="polite"></div>
   <p class="muted small">Estimates only. See <a href="{{ base }}methodology/">how the score works</a>.</p>
+</div>
+<div id="result" class="result" aria-live="polite"></div>
 </section>
 
 <div class="ad-slot"><!-- ad: home_below_calc --></div>

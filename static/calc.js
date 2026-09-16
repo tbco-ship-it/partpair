@@ -89,11 +89,11 @@
       let next = '';
       if (r.side === 'CPU' && r.pct > 10) next = `<a class="next" href="${base}best-cpu-for/${gpu.slug}/">See processors that fix this</a>`;
       else if (r.side === 'GPU' && r.pct > 25) next = `<a class="next" href="${base}best-gpu-for/${cpu.slug}/">See cards that use this CPU fully</a>`;
-      out.innerHTML = `<section class="sheet ${r.verdict}"><div class="sheet-num"><span class="num">${r.pct}</span><span class="pct">%</span></div><p class="sheet-title">${title}</p><div class="beam ${r.side.toLowerCase()}" role="img" aria-label="${r.side} is the limiting part by ${r.pct} percent"><span class="beam-label">CPU</span><span class="beam-track"><span class="beam-fill" style="width:${r.pct / 2}%"></span></span><span class="beam-label">GPU</span></div><p class="sheet-text">${msg} Suggested power supply: ${p.rec} W.</p><p class="sheet-actions">${next}<a class="next" href="${href}">Full breakdown for this pair</a></p></section>`;
+      out.innerHTML = `<section class="sheet ${r.verdict}"><p class="sheet-label">Bottleneck at ${res}</p><div class="sheet-num"><span class="num">${r.pct}</span><span class="pct">%</span></div><p class="sheet-title">${title}</p><div class="beam ${r.side.toLowerCase()}" role="img" aria-label="${r.side} is the limiting part by ${r.pct} percent"><span class="beam-label">CPU</span><span class="beam-track"><span class="beam-fill" style="width:${r.pct / 2}%"></span></span><span class="beam-label">GPU</span></div><p class="sheet-text">${msg} Suggested power supply: ${p.rec} W.</p><p class="sheet-actions">${next}<a class="next" href="${href}">Full breakdown for this pair</a></p></section>`;
     }
     if (psuOut) {
       const p = psu(cpu, gpu);
-      psuOut.innerHTML = `<section class="sheet balanced"><div class="sheet-num"><span class="num">${p.rec}</span><span class="pct">W</span></div><p class="sheet-title">Recommended power supply</p><p class="sheet-text">Estimated peak load ${p.load} W: CPU ${cpu.tdp} W, graphics card ${gpu.tdp} W, about 100 W for the rest.</p><p class="sheet-actions"><a class="next" href="${href}">Bottleneck check for this pair</a></p></section>`;
+      psuOut.innerHTML = `<section class="sheet balanced"><p class="sheet-label">Recommended power supply</p><div class="sheet-num"><span class="num">${p.rec}</span><span class="pct">W</span></div><p class="sheet-title">Recommended power supply</p><p class="sheet-text">Estimated peak load ${p.load} W: CPU ${cpu.tdp} W, graphics card ${gpu.tdp} W, about 100 W for the rest.</p><p class="sheet-actions"><a class="next" href="${href}">Bottleneck check for this pair</a></p></section>`;
     }
     document.querySelectorAll('.sheet-num .num').forEach(countUp);
   }
