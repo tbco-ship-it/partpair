@@ -1,6 +1,6 @@
 :root{
-  --bg:#ffffff;--surface:#f2f4f6;--surface-2:#e5e8eb;--line:#e5e8eb;
-  --text:#191f28;--text-2:#4e5968;--muted:#8b95a1;
+  --bg:#ffffff;--surface:#F9FAFB;--surface-2:#F2F4F6;--line:#e5e8eb;
+  --text:#191f28;--text-2:#4e5968;--muted:#6B7684;
   --blue:#3182f6;--blue-press:#1b64da;--blue-soft:#e8f3ff;
   --green:#00b06f;--green-soft:#e6f7f0;
   --yellow:#f5a623;--yellow-soft:#fff5e0;
@@ -470,7 +470,7 @@ body{
 .next{min-height:48px;padding:0 18px;border-radius:14px;display:inline-flex;align-items:center}
 .next:first-child:not(:only-child),.next:only-child{background:var(--blue);color:#fff;box-shadow:0 4px 12px rgba(49,130,246,.18)}
 .next:first-child:not(:only-child):hover,.next:only-child:hover{background:var(--blue-press);transform:none}
-:root{--surface:#F9FAFB;--surface-2:#F2F4F6;--muted:#6B7684;--r-card:24px}
+:root{--r-card:24px}
 @media (prefers-color-scheme:dark){:root{--line:#33333D;--text:#F2F4F6}}
 .list li+li{border-top:1px solid var(--line)}
 
@@ -552,3 +552,22 @@ header.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;just
 .reveal{opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
 .reveal.is-in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+/* Dark-mode audit 2026-09-16 (iPhone): every surface must derive from tokens, never a literal light color */
+@media (prefers-color-scheme:dark){
+  .calc-grid .card,.card{background:var(--surface);border-color:var(--line);color:var(--text)}
+  .card-title,.sheet-title,.sheet-label,.sheet-num .num{color:var(--text)}
+  .calc-grid .pick,.calc-grid .num-in,.money,.pick,.num-in{background:var(--surface-2);color:var(--text)}
+  .money .num-in{background:transparent}
+  .calc-grid .pick:focus,.calc-grid .num-in:focus,.money:focus-within{background:var(--surface)}
+  .next{background:var(--surface-2);color:var(--text)}
+  .next:first-child:not(:only-child),.next:only-child{background:var(--blue);color:#fff}
+  .sheet .pill{background:rgba(255,255,255,.1);color:var(--text-2)}
+  .pill{background:var(--surface-2);color:var(--text-2)}
+  .tip{background:rgba(255,255,255,.06)}
+  .menu{background:var(--surface);border-color:var(--line)}
+  .seg{background:var(--surface-2)}.seg input:checked+span{background:var(--surface);color:var(--text)}
+  .list li,.list li+li,.list li:last-child{border-color:var(--line)}
+  .tbl th,.tbl td{border-color:var(--line)}
+  header.top{background:color-mix(in srgb,var(--bg) 88%,transparent)}
+}
