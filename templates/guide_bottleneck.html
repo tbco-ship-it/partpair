@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}What a CPU bottleneck means at 1080p, 1440p and 4K (and which CPU each GPU needs) — {{ site }}{% endblock %}
+{% block description %}A CPU bottleneck is not a defect, it is a mismatch that depends on resolution. Here is what the percentage means, why 1080p is the hardest case, and a table of the CPU each graphics-card class needs at each resolution.{% endblock %}
+{% block head %}<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"What a CPU bottleneck means at 1080p, 1440p and 4K","datePublished":"2026-09-17","dateModified":"{{ today }}","author":{"@type":"Organization","name":"{{ site }}"},"url":"{{ origin }}{{ base }}{{ path }}"}</script>{% endblock %}
+{% block content %}
+<nav class="crumbs"><a href="{{ base }}">Home</a> › <a href="{{ base }}guide/">Guides</a> › CPU bottleneck explained</nav>
+<h1>What a CPU bottleneck means at 1080p, 1440p and 4K</h1>
+<div class="prose">
+<p>Every frame is produced in two stages. The CPU prepares the frame: game logic, physics, draw calls, the work that does not change with resolution. The GPU then renders it: shading pixels, work that grows with resolution. Whichever stage takes longer sets your frame rate. When it is the CPU, people say the CPU is "bottlenecking" the GPU. The card is waiting; you paid for performance you are not using.</p>
+<p>Two things follow from this that the calculator is built around.</p>
+<h2>Resolution moves the bottleneck</h2>
+<p>At 1080p a modern card finishes its pixels quickly, so the CPU's fixed cost dominates. At 4K the same card is busy four times longer per frame while the CPU's job is unchanged, so the GPU becomes the limit and the CPU stops mattering as much. This is why the same pairing can read "moderate CPU bottleneck" at 1080p and "balanced" at 4K. Neither reading is wrong; they describe different workloads. If you play competitive titles at 1080p and high refresh, take the 1080p number seriously. If you play at 4K, the CPU column is mostly reassurance.</p>
+<h2>What the percentage is</h2>
+<p>The score is the share of the card's potential that is left unused because the CPU cannot feed it. For each resolution we estimate the gaming index a CPU needs to keep a given card busy (<code>needed = a + b × GPU index</code>, constants on the <a href="{{ base }}methodology/">methodology page</a>). A CPU at 80% of that figure shows as a 20% bottleneck. Under 10% we call the pair balanced: the two stages take about the same time and no upgrade on either side would be dramatic. 10–25% is mild — noticeable in CPU-heavy games, invisible in most. Over 40% is severe: a cheaper card would perform the same.</p>
+<p>A bottleneck in the other direction (a CPU faster than the card needs) is normal and healthy. We only flag it as "CPU overkill" when the gap is large, because the money might have been better spent on the card.</p>
+<h2>Which CPU each card class needs</h2>
+<p>The table below is computed from the model: for representative cards from the top of our database to the bottom, the gaming index the CPU needs at each resolution, and the cheapest CPU in our database that reaches it. Anything faster is fine; anything much slower shows a CPU-side score.</p>
+</div>
+<table class="tbl"><thead><tr><th>Graphics card</th>{% for key, label, a, b in resolutions %}<th>{{ label }} — CPU needed</th>{% endfor %}</tr></thead><tbody>
+{% for r in needed_rows %}<tr><td><a href="{{ base }}gpu/{{ r.gpu.slug }}/">{{ r.gpu.short }}</a></td>{% for key, label, a, b in resolutions %}<td><a href="{{ base }}cpu/{{ r.res[key].cpu.slug }}/">{{ r.res[key].cpu.short }}</a> <small class="muted">(index {{ r.res[key].needed }})</small></td>{% endfor %}</tr>{% endfor %}
+</tbody></table>
+<div class="prose">
+<p>Read it column by column. Going from 1080p to 4K, the CPU requirement drops by roughly a third for the fastest cards. That is the whole argument for pairing a top card with a mid-range CPU when you play at 4K, and against doing so at 1080p.</p>
+<h2>Balanced pairs at 1440p</h2>
+<p>1440p is the most common target for a new build, so here is the band of CPUs that score "balanced" with each card class at that resolution. The low end of the band is the value pick; the high end is where spending more on the CPU stops changing the result.</p>
+</div>
+<table class="tbl"><thead><tr><th>Graphics card</th><th>Balanced from</th><th>up to</th></tr></thead><tbody>
+{% for b in bal %}<tr><td><a href="{{ base }}gpu/{{ b.gpu.slug }}/">{{ b.gpu.short }}</a></td><td><a href="{{ base }}cpu/{{ b.lo.slug }}/">{{ b.lo.short }}</a></td><td><a href="{{ base }}cpu/{{ b.hi.slug }}/">{{ b.hi.short }}</a></td></tr>{% endfor %}
+</tbody></table>
+<div class="prose">
+<h2>What the score does not know</h2>
+<p>The model uses average gaming performance. Simulation and strategy games (Factorio, Stellaris, Microsoft Flight Simulator) lean far harder on the CPU than the average; esports shooters at 240 Hz do too. Memory speed, background software and the specific game engine all move the real number. Treat the score as the starting point for a decision, then check a benchmark of the game you actually play. <a href="{{ base }}">Run your own pair through the calculator</a>.</p>
+</div>
+{% endblock %}

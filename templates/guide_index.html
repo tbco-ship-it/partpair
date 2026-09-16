@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Guides: bottlenecks, power supplies and upgrade decisions — {{ site }}{% endblock %}
+{% block description %}Plain-language guides written to go with the PCPairs calculator: what a CPU bottleneck really means at each resolution, how much PSU headroom you need, and whether to upgrade the CPU or the GPU first.{% endblock %}
+{% block content %}
+<nav class="crumbs"><a href="{{ base }}">Home</a> › Guides</nav>
+<h1>Guides</h1>
+<p class="prose">The calculator gives a number. These pages explain where the number comes from and what to do with it. Every table below is computed from the same model as the calculator, so the two never disagree.</p>
+<ul class="list">
+  <li><a href="{{ base }}guide/cpu-bottleneck-explained/">What a CPU bottleneck means at 1080p, 1440p and 4K<span class="meta">and which CPU each card class needs</span></a></li>
+  <li><a href="{{ base }}guide/psu-headroom/">How much power supply headroom you actually need<span class="meta">load vs. recommended wattage</span></a></li>
+  <li><a href="{{ base }}guide/upgrade-cpu-or-gpu/">Upgrade the CPU or the GPU first?<span class="meta">a decision rule that uses your score</span></a></li>
+</ul>
+{% endblock %}

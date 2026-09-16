@@ -108,6 +108,33 @@ def main():
 
     write("", "index.html")
     write("psu-calculator/", "psu.html")
+    # Guides: hand-written pages backed by tables computed from the same model as the calculator
+    gs = sorted(gpus, key=lambda g: -g["s1440"])
+    tiers = [gs[i] for i in (0, len(gs)//6, len(gs)//3, len(gs)//2, 2*len(gs)//3, 5*len(gs)//6, len(gs)-1)]
+    cs = sorted(cpus, key=lambda c: c["game"])
+    def cpu_at(idx):
+        return next((c for c in cs if c["game"] >= idx), cs[-1])
+    needed_rows = []
+    for g in tiers:
+        row = {"gpu": g, "res": {}}
+        for key, label, a, b in RESOLUTIONS:
+            need = a + b * g["s1440"]
+            row["res"][key] = {"needed": round(need), "cpu": cpu_at(need)}
+        needed_rows.append(row)
+    psu_rows = []
+    for g in tiers:
+        for c in (cpu_at(60), cpu_at(80), cs[-1]):
+            w = psu_watts(c["tdp"], g["tdp"])
+            psu_rows.append({"gpu": g, "cpu": c, **w})
+    # balanced pairs at 1440p: for each GPU tier, the CPU band that scores balanced
+    bal = []
+    for g in tiers:
+        ok = [c for c in cs if bottleneck(c["game"], g["s1440"], "1440p")["verdict"] == "balanced"]
+        if ok: bal.append({"gpu": g, "lo": ok[0], "hi": ok[-1]})
+    write("guide/", "guide_index.html")
+    write("guide/cpu-bottleneck-explained/", "guide_bottleneck.html", needed_rows=needed_rows, bal=bal)
+    write("guide/psu-headroom/", "guide_psu.html", psu_rows=psu_rows, tiers=tiers)
+    write("guide/upgrade-cpu-or-gpu/", "guide_upgrade.html", bal=bal, needed_rows=needed_rows)
     for page in ("about", "methodology", "privacy", "contact"):
         write(f"{page}/", f"{page}.html")
 

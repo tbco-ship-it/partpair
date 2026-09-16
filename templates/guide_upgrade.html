@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Upgrade the CPU or the GPU first? A decision rule that uses your score — {{ site }}{% endblock %}
+{% block description %}Use the bottleneck score and your resolution to decide which part to replace first, with the balanced CPU band for each graphics-card class and the three cases where the answer is neither.{% endblock %}
+{% block head %}<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Upgrade the CPU or the GPU first?","datePublished":"2026-09-17","dateModified":"{{ today }}","author":{"@type":"Organization","name":"{{ site }}"},"url":"{{ origin }}{{ base }}{{ path }}"}</script>{% endblock %}
+{% block content %}
+<nav class="crumbs"><a href="{{ base }}">Home</a> › <a href="{{ base }}guide/">Guides</a> › Upgrade CPU or GPU</nav>
+<h1>Upgrade the CPU or the GPU first?</h1>
+<div class="prose">
+<p>The honest answer is "whichever one is the bottleneck in the games you play at the resolution you play them", and the calculator exists to tell you that. This page turns the score into a rule.</p>
+<h2>The rule</h2>
+<ol>
+<li><strong>Run your current pair</strong> at your resolution. Note which side the score points to and how big it is.</li>
+<li><strong>CPU side, over 25%</strong>: replace the CPU. A faster card would sit idle behind the same wall. Check the socket — if the platform is two generations old, budget for a board and memory too.</li>
+<li><strong>GPU side, or balanced</strong>: replace the card. This is the common case and the one that gives the largest frame-rate jump per dollar. Use the <a href="{{ base }}best-gpu-for/">best-GPU-for pages</a> to see how far you can go before the CPU becomes the limit.</li>
+<li><strong>CPU side, 10–25%</strong>: it depends on the games. Simulation, strategy and high-refresh esports: CPU. Everything else: GPU, and accept a mild bottleneck.</li>
+</ol>
+<h2>Where the CPU stops mattering</h2>
+<p>For each graphics-card class this is the CPU band that scores "balanced" at 1440p. If you are inside the band, a CPU upgrade changes little; put the money into the card or the monitor.</p>
+</div>
+<table class="tbl"><thead><tr><th>Graphics card</th><th>Balanced from</th><th>up to</th></tr></thead><tbody>
+{% for b in bal %}<tr><td><a href="{{ base }}gpu/{{ b.gpu.slug }}/">{{ b.gpu.short }}</a></td><td><a href="{{ base }}cpu/{{ b.lo.slug }}/">{{ b.lo.short }}</a></td><td><a href="{{ base }}cpu/{{ b.hi.slug }}/">{{ b.hi.short }}</a></td></tr>{% endfor %}
+</tbody></table>
+<div class="prose">
+<h2>Three cases where the answer is neither</h2>
+<ul>
+<li><strong>You are at 60 Hz.</strong> If the monitor caps at 60 fps and you already reach it, no upgrade shows on screen. The monitor is the bottleneck.</li>
+<li><strong>Memory.</strong> 16 GB of system memory and 8 GB of VRAM are now the floor for new releases at 1440p. Stutter with a "balanced" score is often memory, not compute.</li>
+<li><strong>Power supply.</strong> A card upgrade that pushes the estimated load past your unit is two purchases, not one. Check the <a href="{{ base }}guide/psu-headroom/">PSU headroom guide</a> first.</li>
+</ul>
+<h2>Upgrade paths that stay balanced</h2>
+<p>Moving one resolution step up (1080p → 1440p) shifts the load to the card, so a CPU that was the limit often becomes adequate after a monitor change. The reverse also holds: dropping to 1080p for high refresh makes a previously balanced CPU the limit. Decide the monitor first, then the parts. <a href="{{ base }}">Try the new pair in the calculator</a> before buying.</p>
+</div>
+{% endblock %}
