@@ -70,7 +70,7 @@ def main():
     ap.add_argument("--base", default="/")
     ap.add_argument("--origin", default="https://pcpairs.com")
     ap.add_argument("--cname", default="pcpairs.com")
-    ap.add_argument("--adsense-pub", default="", help="AdSense publisher id, e.g. pub-1234567890123456")
+    ap.add_argument("--adsense-pub", default="pub-8425563704095379", help="AdSense publisher id, e.g. pub-1234567890123456")
     args = ap.parse_args()
     base = args.base if args.base.endswith("/") else args.base + "/"
     origin = args.origin.rstrip("/")

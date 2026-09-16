@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install jinja2
-      - run: python scripts/build.py --base / --origin https://pcpairs.com
+      - run: python scripts/build.py --base / --origin https://pcpairs.com --adsense-pub pub-8425563704095379
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
@@ -41,5 +41,5 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install jinja2
-      - run: python scripts/build.py --base / --origin https://pcpairs.com
+      - run: python scripts/build.py --base / --origin https://pcpairs.com --adsense-pub pub-8425563704095379
       - run: python scripts/indexnow.py
