@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{ gpu.short }} power supply requirements: what PSU wattage do you need? — {{ site }}{% endblock %}
+{% block description %}{{ gpu.name }} board power is {{ gpu.tdp }} W. Recommended PSU wattage with budget, mid-range and high-end CPUs, transient-spike headroom and connector notes.{% endblock %}
+{% block head %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What power supply do I need for the {{ gpu.short }}?","acceptedAnswer":{"@type":"Answer","text":"With a typical mid-range CPU the {{ gpu.short }} needs about a {{ mid.recommended }} W power supply (estimated load {{ mid.load }} W). With a 65 W-class CPU {{ low.recommended }} W is enough; with a 250 W-class flagship CPU plan on {{ high.recommended }} W."}},{"@type":"Question","name":"How much power does the {{ gpu.short }} draw?","acceptedAnswer":{"@type":"Answer","text":"Rated board power is {{ gpu.tdp }} W. Brief transient spikes can reach roughly {{ (gpu.tdp * 1.5)|round|int }} W, which is why we size the PSU with 30% headroom."}}]}</script>
+{% endblock %}
+{% block content %}
+<nav class="crumbs"><a href="{{ base }}">Home</a> › <a href="{{ base }}gpu/{{ gpu.slug }}/">{{ gpu.short }}</a> › PSU</nav>
+<h1>{{ gpu.short }} power supply requirements</h1>
+<p class="prose">The {{ gpu.name }} is rated at <strong>{{ gpu.tdp }} W</strong> board power. Short transient spikes can reach about {{ (gpu.tdp * 1.5)|round|int }} W, so the power supply must have headroom beyond the sum of the parts. Here is what that means with three classes of processor.</p>
+<div class="ad-slot"><!-- ad: psu_for_top --></div>
+<table class="tbl"><thead><tr><th>CPU class</th><th>Example</th><th>Estimated load</th><th>Recommended PSU</th></tr></thead>
+<tbody>
+<tr><td>65 W-class (e.g. Ryzen 5/7 non-X)</td><td><a href="{{ base }}bottleneck/{{ lowc.slug }}-vs-{{ gpu.slug }}/">{{ lowc.short }}</a></td><td>{{ low.load }} W</td><td><strong>{{ low.recommended }} W</strong></td></tr>
+<tr><td>125–180 W-class (mid-range K / X)</td><td><a href="{{ base }}bottleneck/{{ midc.slug }}-vs-{{ gpu.slug }}/">{{ midc.short }}</a></td><td>{{ mid.load }} W</td><td><strong>{{ mid.recommended }} W</strong></td></tr>
+<tr><td>250 W-class (flagship Intel K)</td><td><a href="{{ base }}bottleneck/{{ highc.slug }}-vs-{{ gpu.slug }}/">{{ highc.short }}</a></td><td>{{ high.load }} W</td><td><strong>{{ high.recommended }} W</strong></td></tr>
+</tbody></table>
+<div class="prose">
+<h2>How we calculate it</h2>
+<p>Estimated load = CPU maximum turbo power + {{ gpu.tdp }} W for the card + 100 W for motherboard, memory, storage and fans. We multiply by 1.3 for transient headroom and round up to the next common PSU size. Full details on the <a href="{{ base }}methodology/">methodology page</a>.</p>
+<h2>Connectors</h2>
+<p>{% if gpu.tdp >= 300 %}Cards in this power class use the 12V-2x6 (12VHPWR) connector or three 8-pin PCIe connectors depending on the board partner. Prefer an ATX 3.x power supply with a native 12V-2x6 cable over adapters.{% elif gpu.tdp >= 200 %}Expect two 8-pin PCIe connectors or a single 12V-2x6 depending on the model. Most 650–850 W units from the last five years have both.{% else %}A single 8-pin (or 6+2-pin) PCIe connector is typical; some low-power models draw everything from the slot. Almost any modern PSU qualifies.{% endif %}</p>
+<h2>When to step up a tier</h2>
+<p>Heavy overclocking, custom water cooling, more than four drives or a lot of RGB each add tens of watts. If two or more apply, buy the next size up. Efficiency and fan noise are also best at 50–70% load, which the 1.3× rule already lands you in.</p>
+</div>
+<p><a href="{{ base }}psu-calculator/">Try your exact CPU in the PSU calculator →</a> · <a href="{{ base }}best-cpu-for/{{ gpu.slug }}/">Best CPU for the {{ gpu.short }} →</a></p>
+{% endblock %}

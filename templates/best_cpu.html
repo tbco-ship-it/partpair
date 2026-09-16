@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Best CPU for the {{ gpu.short }} in 2026 (by budget & socket) — {{ site }}{% endblock %}
+{% block description %}Which processor should you pair with the {{ gpu.name }}? Ranked list of {{ cpus|length }} CPUs by how well they keep the {{ gpu.short }} fed at 1080p and 1440p, with the cheapest no-bottleneck pick per socket.{% endblock %}
+{% block head %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the best CPU for the {{ gpu.short }}?","acceptedAnswer":{"@type":"Answer","text":"For 1440p gaming the best-balanced processors for the {{ gpu.short }} are {% for p in top[:3] %}{{ p.cpu.short }}{% if not loop.last %}, {% endif %}{% endfor %}. The minimum gaming index to avoid a CPU bottleneck at 1440p is about {{ needed1440 }}; at 1080p about {{ needed1080 }}."}},{"@type":"Question","name":"What is the cheapest CPU that will not bottleneck the {{ gpu.short }}?","acceptedAnswer":{"@type":"Answer","text":"{% for s, c in floor.items() %}{{ s }}: {{ c.short }}. {% endfor %}These are the lowest-tier processors on each socket that stay out of the CPU-bottleneck band at 1440p."}}]}</script>
+{% endblock %}
+{% block content %}
+<nav class="crumbs"><a href="{{ base }}">Home</a> › <a href="{{ base }}gpu/{{ gpu.slug }}/">{{ gpu.short }}</a> › Best CPU</nav>
+<h1>Best CPU for the {{ gpu.short }}</h1>
+<p class="prose">The {{ gpu.name }} has a 1440p performance index of <strong>{{ gpu.scores['1440p'] }}</strong>/100. To keep it busy a processor needs a gaming index of roughly <strong>{{ needed1440 }}</strong> at 1440p and <strong>{{ needed1080 }}</strong> at 1080p; anything above that is headroom, anything far above is money better spent on the graphics card. Below: the processors that hit the sweet spot, then the cheapest safe pick on each socket.</p>
+<div class="ad-slot"><!-- ad: best_cpu_top --></div>
+<h2>Sweet-spot processors (1440p)</h2>
+<table class="tbl"><thead><tr><th>#</th><th>CPU</th><th>Socket</th><th>1080p</th><th>1440p</th><th>4K</th></tr></thead>
+<tbody>{% for p in top %}<tr><td>{{ loop.index }}</td><td><a href="{{ base }}{{ p.path }}">{{ p.cpu.short }}</a></td><td>{{ p.cpu.socket }}</td>{% for r in p.results %}<td class="v-{{ r.verdict }}">{{ r.side }} {{ r.pct }}%</td>{% endfor %}</tr>{% endfor %}</tbody></table>
+<h2>Cheapest processor that avoids a bottleneck, per socket</h2>
+<ul class="best">{% for s, c in floor.items() %}<li><strong>{{ s }}</strong>: <a href="{{ base }}bottleneck/{{ c.slug }}-vs-{{ gpu.slug }}/">{{ c.short }}</a> <span class="muted">(gaming index {{ c.game }}, {{ c.cores }} cores)</span></li>{% endfor %}</ul>
+<p class="prose">If you already own a motherboard, start from its socket. AM4 and LGA1700 are end-of-line but cheap; AM5 and LGA1851 leave an upgrade path for the next GPU.</p>
+<div class="ad-slot"><!-- ad: best_cpu_mid --></div>
+<h2>Processors to avoid with this card</h2>
+<p class="prose">{% if worst %}These would leave the {{ gpu.short }} waiting: {% for p in worst %}<a href="{{ base }}{{ p.path }}">{{ p.cpu.short }}</a> ({{ p.main.pct }}% CPU bottleneck at 1440p){% if not loop.last %}, {% endif %}{% endfor %}.{% else %}Every processor in our database can drive this card at 1440p without a meaningful bottleneck.{% endif %}</p>
+<p><a href="{{ base }}psu-for/{{ gpu.slug }}/">Power supply requirements for the {{ gpu.short }} →</a> · <a href="{{ base }}gpu/{{ gpu.slug }}/">All pairings →</a></p>
+{% endblock %}

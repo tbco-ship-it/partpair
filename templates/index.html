@@ -31,12 +31,12 @@
 <section class="grid2">
   <div>
     <h2>Popular graphics cards</h2>
-    <ul class="cols">{% for g in gpus[:16] %}<li><a href="{{ base }}gpu/{{ g.slug }}/">{{ g.short }}</a></li>{% endfor %}</ul>
+    <ul class="cols">{% for g in gpus[:16] %}<li><a href="{{ base }}best-cpu-for/{{ g.slug }}/">Best CPU for {{ g.short }}</a></li>{% endfor %}</ul>
     <p><a href="{{ base }}gpu/">All {{ gpus|length }} GPUs →</a></p>
   </div>
   <div>
     <h2>Popular processors</h2>
-    <ul class="cols">{% for c in cpus[:16] %}<li><a href="{{ base }}cpu/{{ c.slug }}/">{{ c.short }}</a></li>{% endfor %}</ul>
+    <ul class="cols">{% for c in cpus[:16] %}<li><a href="{{ base }}best-gpu-for/{{ c.slug }}/">Best GPU for {{ c.short }}</a></li>{% endfor %}</ul>
     <p><a href="{{ base }}cpu/">All {{ cpus|length }} CPUs →</a></p>
   </div>
 </section>

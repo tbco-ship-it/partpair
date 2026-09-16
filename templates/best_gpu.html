@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Best GPU for the {{ cpu.short }} in 2026 (no wasted CPU, no bottleneck) — {{ site }}{% endblock %}
+{% block description %}Which graphics card matches the {{ cpu.name }}? Cards ranked by how fully they use this processor at 1440p without becoming CPU-bottlenecked, plus the ceiling beyond which faster GPUs are wasted.{% endblock %}
+{% block head %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the best GPU for the {{ cpu.short }}?","acceptedAnswer":{"@type":"Answer","text":"At 1440p the {{ cpu.short }} is best matched with {% for p in top[:3] %}{{ p.gpu.short }}{% if not loop.last %}, {% endif %}{% endfor %}. Cards with a 1440p index above about {{ cap }} start to be held back by this processor."}}]}</script>
+{% endblock %}
+{% block content %}
+<nav class="crumbs"><a href="{{ base }}">Home</a> › <a href="{{ base }}cpu/{{ cpu.slug }}/">{{ cpu.short }}</a> › Best GPU</nav>
+<h1>Best GPU for the {{ cpu.short }}</h1>
+<p class="prose">The {{ cpu.name }} has a gaming index of <strong>{{ cpu.game }}</strong>/100. At 1440p it can fully drive graphics cards up to a performance index of about <strong>{{ cap }}</strong>; faster cards still work, but part of what you pay for sits idle in CPU-heavy games. At 4K the ceiling rises to about {{ cap4k }}, at 1080p it falls to about {{ cap1080 }}.</p>
+<div class="ad-slot"><!-- ad: best_gpu_top --></div>
+<h2>Best-matched cards (1440p)</h2>
+<table class="tbl"><thead><tr><th>#</th><th>GPU</th><th>VRAM</th><th>1080p</th><th>1440p</th><th>4K</th><th>PSU</th></tr></thead>
+<tbody>{% for p in top %}<tr><td>{{ loop.index }}</td><td><a href="{{ base }}{{ p.path }}">{{ p.gpu.short }}</a></td><td>{{ p.gpu.vram }} GB</td>{% for r in p.results %}<td class="v-{{ r.verdict }}">{{ r.side }} {{ r.pct }}%</td>{% endfor %}<td>{{ p.psu.recommended }} W</td></tr>{% endfor %}</tbody></table>
+<h2>Cards this CPU would hold back</h2>
+<p class="prose">{% if over %}{% for p in over %}<a href="{{ base }}{{ p.path }}">{{ p.gpu.short }}</a> ({{ p.main.pct }}% CPU bottleneck at 1440p){% if not loop.last %}, {% endif %}{% endfor %}. Buy one of these only if you game at 4K or plan a CPU upgrade soon.{% else %}None in our database — this processor can drive any current card at 1440p.{% endif %}</p>
+<div class="ad-slot"><!-- ad: best_gpu_mid --></div>
+<h2>Cards that would waste this CPU</h2>
+<p class="prose">{% if under %}{% for p in under %}<a href="{{ base }}{{ p.path }}">{{ p.gpu.short }}</a>{% if not loop.last %}, {% endif %}{% endfor %} leave more than 40% of the {{ cpu.short }} unused at 1440p — fine for esports titles at high refresh, wasteful otherwise.{% else %}Every card in our database keeps this processor reasonably busy.{% endif %}</p>
+<p><a href="{{ base }}cpu/{{ cpu.slug }}/">All pairings for the {{ cpu.short }} →</a></p>
+{% endblock %}

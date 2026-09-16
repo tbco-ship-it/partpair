@@ -6,6 +6,7 @@
 <h1>{{ gpu.name }}: CPU pairings</h1>
 <p class="prose">{{ gpu.vram }} GB VRAM, {{ gpu.tdp }} W board power, released {{ gpu.year }}. Performance index {{ gpu.scores['1080p'] }} at 1080p, <strong>{{ gpu.scores['1440p'] }}</strong> at 1440p and {{ gpu.scores['4k'] }} at 4K (out of 100). Below, every processor in our database ranked by how well it keeps this card fed at 1440p.</p>
 <div class="ad-slot"><!-- ad: gpu_top --></div>
+<p><a href="{{ base }}best-cpu-for/{{ gpu.slug }}/">Best CPU for the {{ gpu.short }} →</a> · <a href="{{ base }}psu-for/{{ gpu.slug }}/">Power supply requirements →</a></p>
 <h2>Best-balanced processors</h2>
 <ul class="best">{% for p in best %}<li><a href="{{ base }}{{ p.path }}">{{ p.cpu.short }}</a> — {{ p.main.side }}-limited {{ p.main.pct }}% ({{ p.main.verdict_label }})</li>{% endfor %}</ul>
 <h2>All {{ pairs|length }} processors</h2>

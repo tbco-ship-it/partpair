@@ -115,6 +115,42 @@ def main():
         best = sorted(pairs, key=lambda p: p["main"]["pct"])[:6]
         write(f"gpu/{g['slug']}/", "gpu.html", gpu=g, pairs=pairs, best=best)
 
+    # Intent pages: best CPU for GPU, best GPU for CPU, PSU requirements per GPU
+    def cpu_needed(g, res):
+        return bottleneck(0, g["s1440"], res)["needed"]
+
+    for g in gpus:
+        pairs = [combo(c, g) for c in cpus]
+        n1440, n1080 = cpu_needed(g, "1440p"), cpu_needed(g, "1080p")
+        # sweet spot: no CPU bottleneck at 1440p, least wasted CPU first
+        ok = [p for p in pairs if not (p["main"]["side"] == "CPU" and p["main"]["pct"] > 10)]
+        top = sorted(ok, key=lambda p: p["main"]["pct"])[:10]
+        worst = sorted([p for p in pairs if p["main"]["side"] == "CPU" and p["main"]["pct"] > 25], key=lambda p: -p["main"]["pct"])[:5]
+        floor = {}
+        for c in sorted(cpus, key=lambda c: c["game"]):
+            if c["game"] >= n1440 * 0.9 and c["socket"] not in floor:
+                floor[c["socket"]] = c
+        write(f"best-cpu-for/{g['slug']}/", "best_cpu.html", gpu=g, top=top, worst=worst, floor=floor,
+              needed1440=n1440, needed1080=n1080)
+        by_tdp = sorted(cpus, key=lambda c: c["tdp"])
+        lowc = next(c for c in by_tdp if c["tdp"] <= 65 and c["year"] >= 2022)
+        midc = next(c for c in by_tdp if 120 <= c["tdp"] <= 181 and c["year"] >= 2022)
+        highc = next(c for c in reversed(by_tdp) if c["tdp"] >= 250)
+        write(f"psu-for/{g['slug']}/", "psu_for.html", gpu=g, lowc=lowc, midc=midc, highc=highc,
+              low=psu_watts(lowc["tdp"], g["tdp"]), mid=psu_watts(midc["tdp"], g["tdp"]), high=psu_watts(highc["tdp"], g["tdp"]))
+
+    for c in cpus:
+        pairs = [combo(c, g) for g in gpus]
+        cap = round((c["game"] - 40.0) / 0.60)
+        cap1080 = round((c["game"] - 45.0) / 0.62)
+        cap4k = round((c["game"] - 30.0) / 0.50)
+        ok = [p for p in pairs if not (p["main"]["side"] == "CPU" and p["main"]["pct"] > 10)]
+        top = sorted(ok, key=lambda p: p["main"]["pct"])[:10]
+        over = sorted([p for p in pairs if p["main"]["side"] == "CPU" and p["main"]["pct"] > 10], key=lambda p: p["main"]["pct"])[:6]
+        under = sorted([p for p in pairs if p["main"]["side"] == "GPU" and p["main"]["pct"] > 40], key=lambda p: -p["main"]["pct"])[:6]
+        write(f"best-gpu-for/{c['slug']}/", "best_gpu.html", cpu=c, top=top, over=over, under=under,
+              cap=cap, cap1080=cap1080, cap4k=cap4k)
+
     # Combo pages
     for c in cpus:
         for g in gpus:
