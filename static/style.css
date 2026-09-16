@@ -23,8 +23,8 @@ a{color:var(--blue);text-decoration:none}a:hover{color:var(--blue-press)}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:6px}
 main{max-width:720px;margin:0 auto;padding:8px 20px 72px}
 h1{font-size:1.85rem;line-height:1.25;letter-spacing:-.02em;font-weight:700;margin:1.2em 0 .5em}
-h2{font-size:1.3rem;line-height:1.3;letter-spacing:-.01em;font-weight:700;margin:2.4em 0 .7em}
-h3{font-size:1.05rem;font-weight:700;margin:1.4em 0 .5em}
+h2{font-size:1.3rem;line-height:1.3;letter-spacing:-.01em;font-weight:700;margin:40px 0 12px}
+h3{font-size:1.05rem;font-weight:700;margin:0}
 p{margin:.6em 0}
 .muted{color:var(--muted)}.small{font-size:.9rem}
 .prose{max-width:62ch}.prose p{margin:.8em 0;color:var(--text-2)}.prose strong{color:var(--text)}
@@ -70,7 +70,7 @@ footer a{color:var(--text-2)}
 .result{margin-top:16px;min-height:1em}
 
 /* verdict sheet — the one loud element */
-.sheet{background:var(--blue-soft);border-radius:var(--r-sheet);padding:28px 24px 22px;margin:18px 0 8px}
+.sheet{background:var(--blue-soft);border-radius:var(--r-sheet);padding:28px 24px 24px;margin:20px 0 8px}
 .sheet.mild,.sheet.gpu-bound{background:var(--yellow-soft)}
 .sheet.moderate,.sheet.overkill{background:var(--orange-soft)}
 .sheet.severe{background:var(--red-soft)}
@@ -98,11 +98,13 @@ footer a{color:var(--text-2)}
 
 /* tables */
 .tbl{width:100%;border-collapse:collapse;margin:.4em 0;font-size:.95rem}
-.tbl th,.tbl td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+.tbl th,.tbl td{padding:14px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;line-height:1.4}
+.tbl td:last-child,.tbl th:last-child{text-align:right}
 .tbl th{color:var(--muted);font-weight:600;font-size:.85rem}
 .tbl tr:last-child td{border-bottom:none}
 .tbl.spec{background:var(--surface);border-radius:var(--r-card);overflow:hidden}
 .tbl.spec th{width:48%;color:var(--text-2)}
+.tbl.spec td{text-align:right}
 .tbl.spec th,.tbl.spec td{border-bottom:1px solid var(--bg)}
 .tbl caption{text-align:left;font-weight:700;padding:0 0 10px;font-size:1rem}
 .bar{display:inline-block;width:72px;height:6px;background:var(--surface-2);border-radius:3px;vertical-align:middle;margin-right:8px;overflow:hidden}
@@ -122,3 +124,18 @@ ul{padding-left:1.1em}
 /* ads: reserved, quiet */
 .ad-slot{margin:28px 0}
 .ad-slot:empty{display:none}
+
+/* Toss-style list card — replaces bare link columns */
+.sec{margin-top:40px}.grid2 .sec{margin-top:0}.grid2{margin-top:40px}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+.sec-h h2{margin:0}
+.sec-h a{font-size:.92rem;font-weight:600;color:var(--text-2)}
+.list{background:var(--surface);border-radius:var(--r-card);padding:6px;margin:0;list-style:none}
+.list li{list-style:none;margin:0;padding:0;border:0}
+.list li+li{border-top:1px solid var(--bg)}
+.list a{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:54px;padding:12px 14px;border-radius:14px;color:var(--text);font-weight:600;line-height:1.35}
+.list a:hover{background:var(--bg);color:var(--text)}
+.list .meta{color:var(--muted);font-weight:500;font-size:.88rem;white-space:nowrap;margin-left:auto;font-feature-settings:"tnum"}
+.list a::after{content:"";flex:none;width:7px;height:7px;border-right:1.8px solid var(--muted);border-bottom:1.8px solid var(--muted);transform:rotate(-45deg);margin-left:4px}
+.list .more-row a{color:var(--blue);justify-content:center}.list .more-row a::after{display:none}
+.grid2{align-items:start}

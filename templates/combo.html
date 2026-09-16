@@ -69,16 +69,15 @@
 {% if up_cpus or up_gpus %}
 <h2>Upgrade paths</h2>
 <div class="grid2">
-{% if up_cpus %}<div><h3>CPUs that remove the bottleneck ({{ c.socket }})</h3><ul>{% for u in up_cpus %}<li><a href="{{ base }}bottleneck/{{ u.slug }}-vs-{{ g.slug }}/">{{ u.short }} + {{ g.short }}</a> <span class="muted">(gaming index {{ u.game }})</span></li>{% endfor %}</ul></div>{% endif %}
-{% if up_gpus %}<div><h3>GPUs that use the {{ c.short }} more fully</h3><ul>{% for u in up_gpus %}<li><a href="{{ base }}bottleneck/{{ c.slug }}-vs-{{ u.slug }}/">{{ c.short }} + {{ u.short }}</a> <span class="muted">(1440p index {{ u.s1440 }})</span></li>{% endfor %}</ul></div>{% endif %}
+{% if up_cpus %}<div class="sec"><div class="sec-h"><h3>CPUs that remove the bottleneck</h3><span class="muted small">{{ c.socket }}</span></div><ul class="list">{% for u in up_cpus %}<li><a href="{{ base }}bottleneck/{{ u.slug }}-vs-{{ g.slug }}/">{{ u.short }}<span class="meta">index {{ u.game }}</span></a></li>{% endfor %}</ul></div>{% endif %}
+{% if up_gpus %}<div class="sec"><div class="sec-h"><h3>Cards that use the {{ c.short }} fully</h3></div><ul class="list">{% for u in up_gpus %}<li><a href="{{ base }}bottleneck/{{ c.slug }}-vs-{{ u.slug }}/">{{ u.short }}<span class="meta">1440p {{ u.s1440 }}</span></a></li>{% endfor %}</ul></div>{% endif %}
 </div>
 {% endif %}
 
 <p><a href="{{ base }}best-cpu-for/{{ g.slug }}/">Best CPU for the {{ g.short }}</a> <a href="{{ base }}best-gpu-for/{{ c.slug }}/">Best GPU for the {{ c.short }}</a> <a href="{{ base }}psu-for/{{ g.slug }}/">{{ g.short }} PSU requirements</a></p>
-<h2>Compare nearby pairs</h2>
-<div class="grid2">
-  <div><h3>Same CPU, other GPUs</h3><ul>{% for n in near_gpus %}<li><a href="{{ base }}bottleneck/{{ c.slug }}-vs-{{ n.slug }}/">{{ c.short }} + {{ n.short }}</a></li>{% endfor %}</ul></div>
-  <div><h3>Same GPU, other CPUs</h3><ul>{% for n in near_cpus %}<li><a href="{{ base }}bottleneck/{{ n.slug }}-vs-{{ g.slug }}/">{{ n.short }} + {{ g.short }}</a></li>{% endfor %}</ul></div>
-</div>
+<section class="grid2">
+  <div class="sec"><div class="sec-h"><h2>Same CPU, other cards</h2><a href="{{ base }}cpu/{{ c.slug }}/">All</a></div><ul class="list">{% for n in near_gpus %}<li><a href="{{ base }}bottleneck/{{ c.slug }}-vs-{{ n.slug }}/">{{ n.short }}<span class="meta">1440p {{ n.s1440 }}</span></a></li>{% endfor %}</ul></div>
+  <div class="sec"><div class="sec-h"><h2>Same card, other CPUs</h2><a href="{{ base }}gpu/{{ g.slug }}/">All</a></div><ul class="list">{% for n in near_cpus %}<li><a href="{{ base }}bottleneck/{{ n.slug }}-vs-{{ g.slug }}/">{{ n.short }}<span class="meta">index {{ n.game }}</span></a></li>{% endfor %}</ul></div>
+</section>
 <p class="muted small">Indexes are relative estimates aggregated from published reviews; real results vary by game, settings, memory speed and drivers. <a href="{{ base }}methodology/">Methodology</a>.</p>
 {% endblock %}
