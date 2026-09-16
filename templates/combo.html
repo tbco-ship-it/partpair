@@ -16,13 +16,13 @@
 
 <section class="sheet {{ m.verdict }}">
   <div class="sheet-num"><span class="num" data-count="{{ m.pct }}">{{ m.pct }}</span><span class="pct">%</span></div>
-  <p class="sheet-title">{% if m.pct < 3 %}Evenly matched at 1440p.{% else %}{{ m.side }}-limited at 1440p. {{ m.verdict_label|capitalize }}.{% endif %}</p>
+  <p class="sheet-title">{% if m.pct < 3 %}Evenly matched at 1440p.{% elif m.verdict == 'balanced' %}Balanced at 1440p.{% else %}{{ m.side }}-limited at 1440p. {{ m.verdict_label|capitalize }}.{% endif %}</p>
   <div class="beam {{ 'cpu' if m.side == 'CPU' else 'gpu' }}" role="img" aria-label="{{ m.side }} is the limiting part by {{ m.pct }} percent">
     <span class="beam-label">CPU</span>
     <span class="beam-track"><span class="beam-fill" style="width:{{ m.pct / 2 }}%"></span></span>
     <span class="beam-label">GPU</span>
   </div>
-  <p class="sheet-text">{% if m.pct < 3 %}Neither part waits on the other at 1440p. This is as balanced as a pairing gets.{% elif m.side == 'CPU' %}The {{ c.short }} cannot feed the {{ g.short }} fast enough at 1440p, so the card sits partly idle in CPU-heavy games.{% else %}The {{ g.short }} is the part working hardest at 1440p, which is what you want. The {{ c.short }} keeps about {{ m.pct }}% in reserve.{% endif %}</p>
+  <p class="sheet-text">{% if m.pct < 3 %}Neither part waits on the other at 1440p. This is as balanced as a pairing gets.{% elif m.verdict == 'balanced' %}Well matched at 1440p. The {{ c.short if m.side == 'CPU' else g.short }} is the slightly busier part, by about {{ m.pct }}%.{% elif m.side == 'CPU' %}The {{ c.short }} cannot feed the {{ g.short }} fast enough at 1440p, so the card sits partly idle in CPU-heavy games.{% else %}The {{ g.short }} is the part working hardest at 1440p, which is what you want. The {{ c.short }} keeps about {{ m.pct }}% in reserve.{% endif %}</p>
 </section>
 
 <div class="ad-slot"><!-- ad: combo_top --></div>

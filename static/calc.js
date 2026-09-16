@@ -71,8 +71,9 @@
       const res = (document.querySelector('input[name=res]:checked') || {}).value || '1440p';
       const r = bottleneck(cpu, gpu, res), p = psu(cpu, gpu);
       const even = r.pct < 3;
-      const title = even ? `Evenly matched at ${res}.` : `${r.side}-limited at ${res}. ${cap(r.label)}.`;
+      const title = even ? `Evenly matched at ${res}.` : r.verdict === 'balanced' ? `Balanced at ${res}.` : `${r.side}-limited at ${res}. ${cap(r.label)}.`;
       const msg = even ? `Neither part waits on the other at ${res}.`
+        : r.verdict === 'balanced' ? `Well matched at ${res}. The ${r.side === 'CPU' ? short(cpu.name) : short(gpu.name)} is the slightly busier part, by about ${r.pct}%.`
         : r.side === 'CPU' ? `The ${short(cpu.name)} holds the ${short(gpu.name)} back by about ${r.pct}% at ${res}.`
         : `The ${short(gpu.name)} is the limiting part at ${res}, which is the healthy direction. The CPU keeps ${r.pct}% in reserve.`;
       let next = '';
@@ -86,6 +87,10 @@
     }
   }
 
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a.next'); if (!a) return;
+    if (typeof gtag === 'function') gtag('event', 'next_action', { label: a.textContent.trim(), href: a.getAttribute('href') });
+  });
   document.querySelectorAll('input.pick').forEach(picker);
   document.querySelectorAll('input[name=res]').forEach(el => el.addEventListener('change', render));
   render();
