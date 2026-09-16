@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% set c = p.cpu %}{% set g = p.gpu %}{% set m = p.main %}
+{% block title %}{{ c.short }} + {{ g.short }} bottleneck check (1080p, 1440p, 4K) — {{ site }}{% endblock %}
+{% block description %}Is the {{ c.short }} a good match for the {{ g.short }}? At 1440p the pair is {{ m.verdict_label }} ({{ m.side }}-limited by {{ m.pct }}%). Resolution breakdown, upgrade paths and PSU wattage.{% endblock %}
+{% block head %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"{{ site }}","item":"{{ origin }}{{ base }}"},{"@type":"ListItem","position":2,"name":"{{ c.short }}","item":"{{ origin }}{{ base }}cpu/{{ c.slug }}/"},{"@type":"ListItem","position":3,"name":"{{ c.short }} + {{ g.short }}","item":"{{ origin }}{{ base }}{{ path }}"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Will the {{ c.short }} bottleneck the {{ g.short }}?","acceptedAnswer":{"@type":"Answer","text":"{% if m.side == 'CPU' and m.pct > 10 %}Yes, at 1440p the {{ c.short }} is estimated to limit the {{ g.short }} by about {{ m.pct }}%. The effect is larger at 1080p and smaller at 4K.{% else %}No. At 1440p the {{ g.short }} is the limiting part, which is the normal state for a gaming PC. The {{ c.short }} has headroom to spare.{% endif %}"}},
+{"@type":"Question","name":"What power supply do I need for a {{ c.short }} and {{ g.short }}?","acceptedAnswer":{"@type":"Answer","text":"Estimated system load is about {{ p.psu.load }} W. A quality {{ p.psu.recommended }} W unit leaves roughly 30% headroom for transient spikes."}},
+{"@type":"Question","name":"Is this pair better at 1080p or 4K?","acceptedAnswer":{"@type":"Answer","text":"{% for r in p.results %}{{ r.label }}: {{ r.side }}-limited {{ r.pct }}% ({{ r.verdict_label }}). {% endfor %}"}}
+]}</script>
+{% endblock %}
+{% block content %}
+<nav class="crumbs"><a href="{{ base }}">Home</a> › <a href="{{ base }}cpu/{{ c.slug }}/">{{ c.short }}</a> › {{ g.short }}</nav>
+<h1>{{ c.short }} + {{ g.short }}: bottleneck check</h1>
+
+<div class="verdict {{ m.verdict }}">
+  <div class="big">{{ m.pct }}%</div>
+  <div>
+    <strong>{{ m.side }}-limited at 1440p — {{ m.verdict_label }}</strong>
+    <p>{% if m.side == 'CPU' %}The {{ c.short }} cannot feed the {{ g.short }} fast enough at 1440p; the card would sit partly idle in CPU-heavy games.{% else %}The {{ g.short }} is the part working hardest at 1440p, which is what you want. The {{ c.short }} has about {{ m.pct }}% of headroom left.{% endif %}</p>
+  </div>
+</div>
+
+<div class="ad-slot"><!-- ad: combo_top --></div>
+
+<h2>By resolution</h2>
+<table class="tbl">
+  <thead><tr><th>Resolution</th><th>Limiting part</th><th>Severity</th><th>Verdict</th></tr></thead>
+  <tbody>
+  {% for r in p.results %}<tr><td>{{ r.label }}</td><td>{{ r.side }}</td><td><span class="bar"><span style="width:{{ r.pct }}%"></span></span> {{ r.pct }}%</td><td class="v-{{ r.verdict }}">{{ r.verdict_label }}</td></tr>{% endfor %}
+  </tbody>
+</table>
+<p class="prose">{% set r1080 = p.results[0] %}{% set r4k = p.results[2] %}
+{% if r1080.side == 'CPU' and r4k.side == 'GPU' %}This is the classic pattern: at 1080p the {{ c.short }} is the limit ({{ r1080.pct }}%), while at 4K the {{ g.short }} takes over ({{ r4k.pct }}% GPU-limited). If you play at 1080p on a high-refresh monitor, a faster CPU is the upgrade that matters; at 1440p or 4K this pair is already well matched.
+{% elif r1080.side == 'CPU' %}The {{ c.short }} is the limiting part at every resolution, even at 4K ({{ r4k.pct }}%). The {{ g.short }} is a much stronger card than this processor can drive — plan a CPU upgrade before spending more on graphics.
+{% elif r4k.pct > 40 %}The {{ g.short }} is the limit at every resolution and by a wide margin at 4K ({{ r4k.pct }}%). The {{ c.short }} is overkill for this card: a faster GPU would give you far more frames than any CPU change.
+{% else %}The {{ g.short }} is the limiting part at every resolution, which is the healthy direction, and the gap is small enough that neither part is wasted. Upgrade the GPU first when you want more frames.{% endif %}</p>
+
+<h2>Specifications</h2>
+<div class="grid2">
+  <table class="tbl spec"><caption><a href="{{ base }}cpu/{{ c.slug }}/">{{ c.name }}</a></caption>
+    <tr><th>Cores / threads</th><td>{{ c.cores }} / {{ c.threads }}</td></tr>
+    <tr><th>Max boost</th><td>{{ c.boost }} GHz</td></tr>
+    <tr><th>Socket</th><td>{{ c.socket }}</td></tr>
+    <tr><th>Max turbo power</th><td>{{ c.tdp }} W</td></tr>
+    <tr><th>Released</th><td>{{ c.year }}</td></tr>
+    <tr><th>Gaming index</th><td>{{ c.game }} / 100</td></tr>
+    <tr><th>Multi-core index</th><td>{{ c.work }} / 100</td></tr>
+  </table>
+  <table class="tbl spec"><caption><a href="{{ base }}gpu/{{ g.slug }}/">{{ g.name }}</a></caption>
+    <tr><th>VRAM</th><td>{{ g.vram }} GB</td></tr>
+    <tr><th>Board power</th><td>{{ g.tdp }} W</td></tr>
+    <tr><th>Released</th><td>{{ g.year }}</td></tr>
+    <tr><th>1080p index</th><td>{{ g.scores['1080p'] }} / 100</td></tr>
+    <tr><th>1440p index</th><td>{{ g.scores['1440p'] }} / 100</td></tr>
+    <tr><th>4K index</th><td>{{ g.scores['4k'] }} / 100</td></tr>
+  </table>
+</div>
+
+<h2>Power supply</h2>
+<p class="prose">CPU {{ c.tdp }} W + GPU {{ g.tdp }} W + about 100 W for motherboard, memory, storage and fans gives an estimated peak load of <strong>{{ p.psu.load }} W</strong>. We recommend a <strong>{{ p.psu.recommended }} W</strong> unit (80 Plus Gold or better) so transient spikes from the graphics card stay inside the PSU's comfort zone. Try other pairs in the <a href="{{ base }}psu-calculator/">PSU calculator</a>.</p>
+
+<div class="ad-slot"><!-- ad: combo_mid --></div>
+
+{% if up_cpus or up_gpus %}
+<h2>Upgrade paths</h2>
+<div class="grid2">
+{% if up_cpus %}<div><h3>CPUs that remove the bottleneck ({{ c.socket }})</h3><ul>{% for u in up_cpus %}<li><a href="{{ base }}bottleneck/{{ u.slug }}-vs-{{ g.slug }}/">{{ u.short }} + {{ g.short }}</a> <span class="muted">(gaming index {{ u.game }})</span></li>{% endfor %}</ul></div>{% endif %}
+{% if up_gpus %}<div><h3>GPUs that use the {{ c.short }} more fully</h3><ul>{% for u in up_gpus %}<li><a href="{{ base }}bottleneck/{{ c.slug }}-vs-{{ u.slug }}/">{{ c.short }} + {{ u.short }}</a> <span class="muted">(1440p index {{ u.s1440 }})</span></li>{% endfor %}</ul></div>{% endif %}
+</div>
+{% endif %}
+
+<h2>Compare nearby pairs</h2>
+<div class="grid2">
+  <div><h3>Same CPU, other GPUs</h3><ul>{% for n in near_gpus %}<li><a href="{{ base }}bottleneck/{{ c.slug }}-vs-{{ n.slug }}/">{{ c.short }} + {{ n.short }}</a></li>{% endfor %}</ul></div>
+  <div><h3>Same GPU, other CPUs</h3><ul>{% for n in near_cpus %}<li><a href="{{ base }}bottleneck/{{ n.slug }}-vs-{{ g.slug }}/">{{ n.short }} + {{ g.short }}</a></li>{% endfor %}</ul></div>
+</div>
+<p class="muted small">Indexes are relative estimates aggregated from published reviews; real results vary by game, settings, memory speed and drivers. <a href="{{ base }}methodology/">Methodology</a>.</p>
+{% endblock %}

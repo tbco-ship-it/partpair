@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Methodology: how the bottleneck score works — {{ site }}{% endblock %}
+{% block content %}
+<h1>Methodology</h1>
+<div class="prose">
+<h2>Performance indexes</h2>
+<p>Each CPU carries a <em>gaming index</em> (0–100) and a <em>multi-core index</em>. Each GPU carries a 1440p index; the 1080p and 4K indexes are derived from it (1080p compresses the spread between cards because the CPU takes over; 4K widens it). The indexes are relative estimates that we assemble from published independent reviews and adjust by hand; they are not our own lab measurements, and they will drift as drivers and games change.</p>
+<h2>The bottleneck formula</h2>
+<p>For each resolution we estimate the gaming index a CPU needs to keep a given card fully busy: <code>needed = a + b × GPU index</code>, with <code>a, b = 45, 0.62</code> at 1080p, <code>40, 0.60</code> at 1440p and <code>30, 0.50</code> at 4K. If the CPU's index is below <code>needed</code>, the CPU is the limit and the severity is <code>1 − CPU / needed</code>. If it is above, the GPU is the limit and the severity is <code>1 − needed / CPU</code>. Under 10% we call the pair balanced; 10–25% mild; 25–40% moderate; over 40% severe.</p>
+<p>The constants were tuned so that pairings reviewers describe as well matched (for example a mid-range six-core with a mid-range card at 1440p, or a flagship X3D chip with a flagship card) land in the balanced band.</p>
+<h2>Power supply</h2>
+<p>Estimated load = CPU maximum turbo power + GPU board power + 100 W. Recommended PSU = the first common size (450, 550, 650, 750, 850, 1000, 1200, 1600 W) at or above 1.3× the estimated load.</p>
+<h2>Limits</h2>
+<p>Real frame rates depend on the game engine, settings, memory speed, background software and drivers. Treat the score as a planning aid, not a promise.</p>
+</div>
+{% endblock %}

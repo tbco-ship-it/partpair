@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}PSU wattage calculator for your CPU + GPU — {{ site }}{% endblock %}
+{% block description %}Pick your CPU and graphics card and get a power supply recommendation with 30% headroom for transient spikes.{% endblock %}
+{% block content %}
+<h1>PSU wattage calculator</h1>
+<p class="prose">Select your parts. We add the CPU's maximum turbo power, the GPU's board power and about 100 W for the rest of the system, then apply 30% headroom and round up to a common PSU size.</p>
+<section class="calc card">
+  <div class="row">
+    <label>CPU<select id="cpu">{% for c in cpus %}<option value="{{ c.slug }}">{{ c.name }}</option>{% endfor %}</select></label>
+    <label>GPU<select id="gpu">{% for g in gpus %}<option value="{{ g.slug }}">{{ g.name }}</option>{% endfor %}</select></label>
+  </div>
+  <div id="psu-result" class="result" aria-live="polite"></div>
+</section>
+<div class="ad-slot"><!-- ad: psu_below --></div>
+<section class="prose">
+  <h2>Why 30% headroom</h2>
+  <p>Modern graphics cards draw brief spikes well above their rated board power — a 300 W card can pull 450 W for a few milliseconds. Power supplies are also most efficient and quietest around 50–70% load. Sizing to about 1.3× the steady-state estimate covers both without paying for wattage you will never use.</p>
+  <h2>What the estimate leaves out</h2>
+  <p>Heavy overclocking, many hard drives, RGB controllers and pump-driven water cooling each add tens of watts. If your build has several of these, step up one tier.</p>
+</section>
+<script src="{{ base }}static/calc.js" defer></script>
+{% endblock %}

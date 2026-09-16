@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}All processors — {{ site }}{% endblock %}
+{% block content %}
+<h1>Processors</h1>
+<table class="tbl"><thead><tr><th>CPU</th><th>Cores</th><th>Socket</th><th>Gaming index</th><th>Multi-core</th></tr></thead>
+<tbody>{% for c in cpus %}<tr><td><a href="{{ base }}cpu/{{ c.slug }}/">{{ c.name }}</a></td><td>{{ c.cores }}/{{ c.threads }}</td><td>{{ c.socket }}</td><td>{{ c.game }}</td><td>{{ c.work }}</td></tr>{% endfor %}</tbody></table>
+{% endblock %}

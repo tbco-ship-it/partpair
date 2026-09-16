@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Privacy policy — {{ site }}{% endblock %}
+{% block content %}
+<h1>Privacy policy</h1>
+<div class="prose">
+<p>{{ site }} is a static website. We do not require accounts and do not collect names, e-mail addresses or other personal information from visitors.</p>
+<h2>Advertising</h2>
+<p>We use Google AdSense to display advertising. Google and its partners may use cookies or device identifiers to serve ads based on your prior visits to this and other websites. You can opt out of personalised advertising at <a href="https://www.google.com/settings/ads" rel="nofollow">Google Ads Settings</a> or via <a href="https://www.aboutads.info" rel="nofollow">aboutads.info</a>. Visitors in the EEA, UK and Switzerland are shown a consent dialog before any advertising cookies are set.</p>
+<h2>Analytics</h2>
+<p>We may use privacy-respecting, aggregated analytics (page views, referrers, country) to understand which pages are useful. No cross-site tracking is performed by us.</p>
+<h2>Hosting</h2>
+<p>Our host records standard server logs (IP address, user agent, requested URL) for security and operations, retained for a limited period.</p>
+<h2>Contact</h2>
+<p>Questions about this policy: see the <a href="{{ base }}contact/">contact page</a>. Last updated {{ today }}.</p>
+</div>
+{% endblock %}

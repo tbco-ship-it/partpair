@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ gpu.short }}: best CPU pairings & bottleneck by processor — {{ site }}{% endblock %}
+{% block description %}Which CPU do you need for the {{ gpu.name }}? Bottleneck estimates against {{ cpus|length }} processors at 1440p, best-balanced picks and PSU wattage.{% endblock %}
+{% block content %}
+<nav class="crumbs"><a href="{{ base }}">Home</a> › <a href="{{ base }}gpu/">GPUs</a> › {{ gpu.short }}</nav>
+<h1>{{ gpu.name }}: CPU pairings</h1>
+<p class="prose">{{ gpu.vram }} GB VRAM, {{ gpu.tdp }} W board power, released {{ gpu.year }}. Performance index {{ gpu.scores['1080p'] }} at 1080p, <strong>{{ gpu.scores['1440p'] }}</strong> at 1440p and {{ gpu.scores['4k'] }} at 4K (out of 100). Below, every processor in our database ranked by how well it keeps this card fed at 1440p.</p>
+<div class="ad-slot"><!-- ad: gpu_top --></div>
+<h2>Best-balanced processors</h2>
+<ul class="best">{% for p in best %}<li><a href="{{ base }}{{ p.path }}">{{ p.cpu.short }}</a> — {{ p.main.side }}-limited {{ p.main.pct }}% ({{ p.main.verdict_label }})</li>{% endfor %}</ul>
+<h2>All {{ pairs|length }} processors</h2>
+<table class="tbl">
+<thead><tr><th>CPU</th><th>Socket</th><th>1080p</th><th>1440p</th><th>4K</th><th>PSU</th></tr></thead>
+<tbody>{% for p in pairs %}<tr><td><a href="{{ base }}{{ p.path }}">{{ p.cpu.short }}</a></td><td>{{ p.cpu.socket }}</td>{% for r in p.results %}<td class="v-{{ r.verdict }}">{{ r.side }} {{ r.pct }}%</td>{% endfor %}<td>{{ p.psu.recommended }} W</td></tr>{% endfor %}</tbody>
+</table>
+{% endblock %}

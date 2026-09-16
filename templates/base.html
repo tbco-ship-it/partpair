@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ site }}{% endblock %}</title>
+<meta name="description" content="{% block description %}Check whether your CPU and GPU are a balanced pair. Bottleneck estimates at 1080p, 1440p and 4K, plus PSU wattage recommendations.{% endblock %}">
+<link rel="canonical" href="{{ origin }}{{ base }}{{ path }}">
+<link rel="stylesheet" href="{{ base }}static/style.css">
+<link rel="icon" href="{{ base }}static/favicon.svg" type="image/svg+xml">
+{% block head %}{% endblock %}
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="{{ base }}">{{ site }}</a>
+  <nav>
+    <a href="{{ base }}">Bottleneck</a>
+    <a href="{{ base }}psu-calculator/">PSU</a>
+    <a href="{{ base }}cpu/">CPUs</a>
+    <a href="{{ base }}gpu/">GPUs</a>
+    <a href="{{ base }}methodology/">Method</a>
+  </nav>
+</header>
+<main>
+{% block content %}{% endblock %}
+</main>
+<footer>
+  <p><a href="{{ base }}about/">About</a> · <a href="{{ base }}methodology/">Methodology</a> · <a href="{{ base }}privacy/">Privacy</a> · <a href="{{ base }}contact/">Contact</a></p>
+  <p class="muted">Scores are relative estimates built from published reviews, not lab measurements. Product names are trademarks of their owners. Updated {{ today }}.</p>
+</footer>
+</body>
+</html>

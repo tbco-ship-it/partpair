@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}All graphics cards — {{ site }}{% endblock %}
+{% block content %}
+<h1>Graphics cards</h1>
+<table class="tbl"><thead><tr><th>GPU</th><th>VRAM</th><th>Power</th><th>1080p</th><th>1440p</th><th>4K</th></tr></thead>
+<tbody>{% for g in gpus %}<tr><td><a href="{{ base }}gpu/{{ g.slug }}/">{{ g.name }}</a></td><td>{{ g.vram }} GB</td><td>{{ g.tdp }} W</td><td>{{ g.scores['1080p'] }}</td><td>{{ g.scores['1440p'] }}</td><td>{{ g.scores['4k'] }}</td></tr>{% endfor %}</tbody></table>
+{% endblock %}

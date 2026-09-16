@@ -1,0 +1,4 @@
+.venv/
+.preview/
+__pycache__/
+dist/

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}CPU & GPU Bottleneck Calculator (1080p, 1440p, 4K) — {{ site }}{% endblock %}
+{% block description %}Free bottleneck calculator for {{ cpus|length }} CPUs and {{ gpus|length }} graphics cards. Pick your parts and see which one limits performance at 1080p, 1440p and 4K, and what PSU you need.{% endblock %}
+{% block head %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"{{ site }} Bottleneck Calculator","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"{{ origin }}{{ base }}"}</script>
+{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>CPU &amp; GPU bottleneck calculator</h1>
+  <p>Pick a processor and a graphics card. We estimate which part holds the other back at 1080p, 1440p and 4K, and how big a power supply the pair needs.</p>
+</section>
+
+<section class="calc card" id="calc">
+  <div class="row">
+    <label>CPU
+      <select id="cpu">{% for c in cpus %}<option value="{{ c.slug }}">{{ c.name }}</option>{% endfor %}</select>
+    </label>
+    <label>GPU
+      <select id="gpu">{% for g in gpus %}<option value="{{ g.slug }}">{{ g.name }}</option>{% endfor %}</select>
+    </label>
+  </div>
+  <div class="row res">
+    {% for r in resolutions %}<label><input type="radio" name="res" value="{{ r[0] }}" {% if r[0]=='1440p' %}checked{% endif %}> {{ r[1] }}</label>{% endfor %}
+  </div>
+  <div id="result" class="result" aria-live="polite"></div>
+  <p class="muted small">Estimates only. See <a href="{{ base }}methodology/">how the score works</a>.</p>
+</section>
+
+<div class="ad-slot"><!-- ad: home_below_calc --></div>
+
+<section class="grid2">
+  <div>
+    <h2>Popular graphics cards</h2>
+    <ul class="cols">{% for g in gpus[:16] %}<li><a href="{{ base }}gpu/{{ g.slug }}/">{{ g.short }}</a></li>{% endfor %}</ul>
+    <p><a href="{{ base }}gpu/">All {{ gpus|length }} GPUs →</a></p>
+  </div>
+  <div>
+    <h2>Popular processors</h2>
+    <ul class="cols">{% for c in cpus[:16] %}<li><a href="{{ base }}cpu/{{ c.slug }}/">{{ c.short }}</a></li>{% endfor %}</ul>
+    <p><a href="{{ base }}cpu/">All {{ cpus|length }} CPUs →</a></p>
+  </div>
+</section>
+
+<section class="prose">
+  <h2>What a "bottleneck" actually means</h2>
+  <p>In a game, every frame needs the CPU to prepare draw calls, physics and AI, and then the GPU to render pixels. Whichever finishes last sets your frame rate. If the GPU is waiting on the CPU, you are <strong>CPU-limited</strong>; if the CPU is idling while the GPU grinds through pixels, you are <strong>GPU-limited</strong>. Being mildly GPU-limited is the normal, healthy state for a gaming PC: it means you are getting everything you paid for out of the graphics card.</p>
+  <p>Resolution shifts the balance. At 1080p the GPU has little work per frame, so a fast CPU matters most; at 4K the GPU does four times the pixel work of 1080p and even a mid-range CPU can keep up. That is why the same pair can read "CPU bottleneck" at 1080p and "balanced" at 4K.</p>
+  <h2>How to read the percentage</h2>
+  <p>The percentage is how much faster the limiting part would need to be before the other part became the limit. Under 10% is balanced. 10–25% is mild and rarely worth spending money on. 25–40% is where an upgrade of the slower part gives visible gains. Above 40% one part is clearly mismatched.</p>
+</section>
+<script src="{{ base }}static/calc.js" defer></script>
+{% endblock %}

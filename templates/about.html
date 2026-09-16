@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}About — {{ site }}{% endblock %}
+{% block content %}
+<h1>About {{ site }}</h1>
+<div class="prose">
+<p>{{ site }} answers one question quickly: will this processor and this graphics card work well together? We maintain a small, hand-checked database of current desktop CPUs and GPUs and publish a bottleneck estimate for every pairing at 1080p, 1440p and 4K, plus a power-supply recommendation.</p>
+<p>The site is independent. We do not sell hardware and we are not paid by any manufacturer. It is funded by display advertising.</p>
+<p>Something wrong or missing? Use the <a href="{{ base }}contact/">contact page</a>.</p>
+</div>
+{% endblock %}

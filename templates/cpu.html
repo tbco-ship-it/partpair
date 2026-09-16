@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ cpu.short }}: best GPU pairings & bottleneck by graphics card — {{ site }}{% endblock %}
+{% block description %}Which graphics card matches the {{ cpu.name }}? Bottleneck estimates against {{ gpus|length }} GPUs at 1440p, best-balanced picks and specs.{% endblock %}
+{% block content %}
+<nav class="crumbs"><a href="{{ base }}">Home</a> › <a href="{{ base }}cpu/">CPUs</a> › {{ cpu.short }}</nav>
+<h1>{{ cpu.name }}: GPU pairings</h1>
+<p class="prose">{{ cpu.cores }} cores / {{ cpu.threads }} threads, up to {{ cpu.boost }} GHz, socket {{ cpu.socket }}, released {{ cpu.year }}. Gaming index <strong>{{ cpu.game }}</strong>/100, multi-core index {{ cpu.work }}/100. Below, every card in our database ranked by how well it balances against this processor at 1440p.</p>
+<div class="ad-slot"><!-- ad: cpu_top --></div>
+<h2>Best-balanced graphics cards</h2>
+<ul class="best">{% for p in best %}<li><a href="{{ base }}{{ p.path }}">{{ p.gpu.short }}</a> — {{ p.main.side }}-limited {{ p.main.pct }}% ({{ p.main.verdict_label }})</li>{% endfor %}</ul>
+<h2>All {{ pairs|length }} cards</h2>
+<table class="tbl">
+<thead><tr><th>GPU</th><th>1080p</th><th>1440p</th><th>4K</th><th>PSU</th></tr></thead>
+<tbody>{% for p in pairs %}<tr><td><a href="{{ base }}{{ p.path }}">{{ p.gpu.short }}</a></td>{% for r in p.results %}<td class="v-{{ r.verdict }}">{{ r.side }} {{ r.pct }}%</td>{% endfor %}<td>{{ p.psu.recommended }} W</td></tr>{% endfor %}</tbody>
+</table>
+{% endblock %}
