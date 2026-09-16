@@ -36,7 +36,9 @@
     }
     function close() { menu.hidden = true; active = -1; input.setAttribute('aria-expanded', 'false'); }
 
-    input.addEventListener('focus', () => { input.select(); open(''); });
+    // Typing replaces the current pick: select everything on focus/click so the user never edits inside the old name.
+    input.addEventListener('focus', () => { setTimeout(() => input.select(), 0); open(''); });
+    input.addEventListener('click', () => { if (picked[kind] && input.value === picked[kind].name) input.select(); });
     input.addEventListener('input', () => { active = -1; open(input.value); });
     input.addEventListener('keydown', e => {
       if (menu.hidden) return;
