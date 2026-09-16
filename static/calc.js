@@ -63,6 +63,16 @@
   }
   function psu(cpu, gpu) { const load = cpu.tdp + gpu.tdp + 100; return { load, rec: TIERS.find(t => t >= load * 1.3) || 1600 }; }
 
+
+  // Count-up on the headline number (skipped when the user prefers reduced motion).
+  function countUp(el) {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const target = parseFloat(el.textContent.replace(/[^0-9.]/g, '')); if (!isFinite(target)) return;
+    const fmt = el.textContent.includes(',') ? n => Math.round(n).toLocaleString('ko-KR') : n => String(Math.round(n));
+    const t0 = performance.now(), dur = 420;
+    (function step(t) { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3); el.textContent = fmt(target * e); if (k < 1) requestAnimationFrame(step); })(t0);
+  }
+
   function render() {
     const cpu = picked.cpus, gpu = picked.gpus;
     if (!cpu || !gpu) return;
@@ -85,6 +95,7 @@
       const p = psu(cpu, gpu);
       psuOut.innerHTML = `<section class="sheet balanced"><div class="sheet-num"><span class="num">${p.rec}</span><span class="pct">W</span></div><p class="sheet-title">Recommended power supply</p><p class="sheet-text">Estimated peak load ${p.load} W: CPU ${cpu.tdp} W, graphics card ${gpu.tdp} W, about 100 W for the rest.</p><p class="sheet-actions"><a class="next" href="${href}">Bottleneck check for this pair</a></p></section>`;
     }
+    document.querySelectorAll('.sheet-num .num').forEach(countUp);
   }
 
   document.addEventListener('click', e => {
