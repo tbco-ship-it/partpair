@@ -76,7 +76,7 @@ footer a{color:var(--text-2)}
 .sheet.severe{background:var(--red-soft)}
 .sheet.balanced{background:var(--green-soft)}
 .sheet-num{display:flex;align-items:baseline;gap:4px;line-height:1}
-.sheet-num .num{font-size:4.5rem;font-weight:800;letter-spacing:-.04em}
+.sheet-num .num{font-size:clamp(2.2rem,10vw,4.5rem);font-weight:800;letter-spacing:-.04em;overflow-wrap:anywhere}
 .sheet-num .pct{font-size:1.6rem;font-weight:700;color:var(--text-2)}
 .sheet-title{font-size:1.15rem;font-weight:700;margin:.6em 0 .2em}
 .sheet-text{color:var(--text-2);margin:.4em 0 0;max-width:56ch}
