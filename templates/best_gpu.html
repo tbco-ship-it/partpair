@@ -17,5 +17,5 @@
 <div class="ad-slot"><!-- ad: best_gpu_mid --></div>
 <h2>Cards that would waste this CPU</h2>
 <p class="prose">{% if under %}{% for p in under %}<a href="{{ base }}{{ p.path }}">{{ p.gpu.short }}</a>{% if not loop.last %}, {% endif %}{% endfor %} leave more than 40% of the {{ cpu.short }} unused at 1440p — fine for esports titles at high refresh, wasteful otherwise.{% else %}Every card in our database keeps this processor reasonably busy.{% endif %}</p>
-<p><a href="{{ base }}cpu/{{ cpu.slug }}/">All pairings for the {{ cpu.short }} →</a></p>
+<p><a href="{{ base }}cpu/{{ cpu.slug }}/">All pairings for the {{ cpu.short }}</a></p>
 {% endblock %}

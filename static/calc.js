@@ -29,13 +29,14 @@
       const res = (document.querySelector('input[name=res]:checked') || {}).value || '1440p';
       const r = bottleneck(cpu, gpu, res), p = psu(cpu, gpu);
       const msg = r.side === 'CPU'
-        ? `The ${short(cpu.name)} limits the ${short(gpu.name)} by about ${r.pct}% at ${res}.`
-        : `The ${short(gpu.name)} is the limiting part at ${res} (${r.pct}% headroom on the CPU) — the healthy direction.`;
-      out.innerHTML = `<div class="verdict ${r.verdict}"><div class="big">${r.pct}%</div><div><strong>${r.side}-limited — ${r.label}</strong><p>${msg} Suggested PSU: ${p.rec} W.</p><p><a href="${href}">Full breakdown for this pair →</a></p></div></div>`;
+        ? `The ${short(cpu.name)} holds the ${short(gpu.name)} back by about ${r.pct}% at ${res}.`
+        : `The ${short(gpu.name)} is the limiting part at ${res}, which is the healthy direction. The CPU keeps ${r.pct}% in reserve.`;
+      const dot = r.side === 'CPU' ? 50 - r.pct / 2 : 50 + r.pct / 2;
+      out.innerHTML = `<section class="sheet ${r.verdict}"><div class="sheet-num"><span class="num">${r.pct}</span><span class="pct">%</span></div><p class="sheet-title">${r.side}-limited at ${res}. ${r.label.charAt(0).toUpperCase() + r.label.slice(1)}.</p><div class="beam" aria-hidden="true"><span class="beam-label">CPU</span><span class="beam-track"><span class="beam-dot" style="left:${dot}%"></span></span><span class="beam-label">GPU</span></div><p class="sheet-text">${msg} Suggested power supply: ${p.rec} W. <a href="${href}">See the full breakdown</a></p></section>`;
     }
     if (psuOut) {
       const p = psu(cpu, gpu);
-      psuOut.innerHTML = `<div class="verdict balanced"><div class="big">${p.rec} W</div><div><strong>Recommended power supply</strong><p>Estimated peak load ${p.load} W (CPU ${cpu.tdp} W + GPU ${gpu.tdp} W + 100 W system). <a href="${href}">Bottleneck check for this pair →</a></p></div></div>`;
+      psuOut.innerHTML = `<section class="sheet balanced"><div class="sheet-num"><span class="num">${p.rec}</span><span class="pct">W</span></div><p class="sheet-title">Recommended power supply</p><p class="sheet-text">Estimated peak load ${p.load} W: CPU ${cpu.tdp} W, graphics card ${gpu.tdp} W, about 100 W for the rest. <a href="${href}">Bottleneck check for this pair</a></p></section>`;
     }
   }
   [cpuSel, gpuSel, ...document.querySelectorAll('input[name=res]')].forEach(el => el && el.addEventListener('change', render));

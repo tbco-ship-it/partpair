@@ -14,13 +14,16 @@
 <nav class="crumbs"><a href="{{ base }}">Home</a> › <a href="{{ base }}cpu/{{ c.slug }}/">{{ c.short }}</a> › {{ g.short }}</nav>
 <h1>{{ c.short }} + {{ g.short }}: bottleneck check</h1>
 
-<div class="verdict {{ m.verdict }}">
-  <div class="big">{{ m.pct }}%</div>
-  <div>
-    <strong>{{ m.side }}-limited at 1440p — {{ m.verdict_label }}</strong>
-    <p>{% if m.side == 'CPU' %}The {{ c.short }} cannot feed the {{ g.short }} fast enough at 1440p; the card would sit partly idle in CPU-heavy games.{% else %}The {{ g.short }} is the part working hardest at 1440p, which is what you want. The {{ c.short }} has about {{ m.pct }}% of headroom left.{% endif %}</p>
+<section class="sheet {{ m.verdict }}">
+  <div class="sheet-num"><span class="num" data-count="{{ m.pct }}">{{ m.pct }}</span><span class="pct">%</span></div>
+  <p class="sheet-title">{{ m.side }}-limited at 1440p. {{ m.verdict_label|capitalize }}.</p>
+  <div class="beam" aria-hidden="true">
+    <span class="beam-label">CPU</span>
+    <span class="beam-track"><span class="beam-dot" style="left:{{ 50 - m.pct/2 if m.side == 'CPU' else 50 + m.pct/2 }}%"></span></span>
+    <span class="beam-label">GPU</span>
   </div>
-</div>
+  <p class="sheet-text">{% if m.side == 'CPU' %}The {{ c.short }} cannot feed the {{ g.short }} fast enough at 1440p, so the card sits partly idle in CPU-heavy games.{% else %}The {{ g.short }} is the part working hardest at 1440p, which is what you want. The {{ c.short }} keeps about {{ m.pct }}% in reserve.{% endif %}</p>
+</section>
 
 <div class="ad-slot"><!-- ad: combo_top --></div>
 
@@ -71,7 +74,7 @@
 </div>
 {% endif %}
 
-<p><a href="{{ base }}best-cpu-for/{{ g.slug }}/">Best CPU for the {{ g.short }}</a> · <a href="{{ base }}best-gpu-for/{{ c.slug }}/">Best GPU for the {{ c.short }}</a> · <a href="{{ base }}psu-for/{{ g.slug }}/">{{ g.short }} PSU requirements</a></p>
+<p><a href="{{ base }}best-cpu-for/{{ g.slug }}/">Best CPU for the {{ g.short }}</a> <a href="{{ base }}best-gpu-for/{{ c.slug }}/">Best GPU for the {{ c.short }}</a> <a href="{{ base }}psu-for/{{ g.slug }}/">{{ g.short }} PSU requirements</a></p>
 <h2>Compare nearby pairs</h2>
 <div class="grid2">
   <div><h3>Same CPU, other GPUs</h3><ul>{% for n in near_gpus %}<li><a href="{{ base }}bottleneck/{{ c.slug }}-vs-{{ n.slug }}/">{{ c.short }} + {{ n.short }}</a></li>{% endfor %}</ul></div>

@@ -6,7 +6,7 @@
 <h1>{{ cpu.name }}: GPU pairings</h1>
 <p class="prose">{{ cpu.cores }} cores / {{ cpu.threads }} threads, up to {{ cpu.boost }} GHz, socket {{ cpu.socket }}, released {{ cpu.year }}. Gaming index <strong>{{ cpu.game }}</strong>/100, multi-core index {{ cpu.work }}/100. Below, every card in our database ranked by how well it balances against this processor at 1440p.</p>
 <div class="ad-slot"><!-- ad: cpu_top --></div>
-<p><a href="{{ base }}best-gpu-for/{{ cpu.slug }}/">Best GPU for the {{ cpu.short }} →</a></p>
+<p><a href="{{ base }}best-gpu-for/{{ cpu.slug }}/">Best GPU for the {{ cpu.short }}</a></p>
 <h2>Best-balanced graphics cards</h2>
 <ul class="best">{% for p in best %}<li><a href="{{ base }}{{ p.path }}">{{ p.gpu.short }}</a> — {{ p.main.side }}-limited {{ p.main.pct }}% ({{ p.main.verdict_label }})</li>{% endfor %}</ul>
 <h2>All {{ pairs|length }} cards</h2>

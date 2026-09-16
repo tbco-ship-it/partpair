@@ -18,5 +18,5 @@
 <div class="ad-slot"><!-- ad: best_cpu_mid --></div>
 <h2>Processors to avoid with this card</h2>
 <p class="prose">{% if worst %}These would leave the {{ gpu.short }} waiting: {% for p in worst %}<a href="{{ base }}{{ p.path }}">{{ p.cpu.short }}</a> ({{ p.main.pct }}% CPU bottleneck at 1440p){% if not loop.last %}, {% endif %}{% endfor %}.{% else %}Every processor in our database can drive this card at 1440p without a meaningful bottleneck.{% endif %}</p>
-<p><a href="{{ base }}psu-for/{{ gpu.slug }}/">Power supply requirements for the {{ gpu.short }} →</a> · <a href="{{ base }}gpu/{{ gpu.slug }}/">All pairings →</a></p>
+<p><a href="{{ base }}psu-for/{{ gpu.slug }}/">Power supply requirements for the {{ gpu.short }}</a> <a href="{{ base }}gpu/{{ gpu.slug }}/">All pairings</a></p>
 {% endblock %}

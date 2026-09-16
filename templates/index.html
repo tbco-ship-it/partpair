@@ -6,8 +6,8 @@
 {% endblock %}
 {% block content %}
 <section class="hero">
-  <h1>CPU &amp; GPU bottleneck calculator</h1>
-  <p>Pick a processor and a graphics card. We estimate which part holds the other back at 1080p, 1440p and 4K, and how big a power supply the pair needs.</p>
+  <h1>Do these two parts belong together?</h1>
+  <p>Pick a processor and a graphics card. You get one number: how much one holds the other back at your resolution, and the power supply the pair needs.</p>
 </section>
 
 <section class="calc card" id="calc">
@@ -19,8 +19,8 @@
       <select id="gpu">{% for g in gpus %}<option value="{{ g.slug }}">{{ g.name }}</option>{% endfor %}</select>
     </label>
   </div>
-  <div class="row res">
-    {% for r in resolutions %}<label><input type="radio" name="res" value="{{ r[0] }}" {% if r[0]=='1440p' %}checked{% endif %}> {{ r[1] }}</label>{% endfor %}
+  <div class="seg" role="radiogroup" aria-label="Resolution">
+    {% for r in resolutions %}<label><input type="radio" name="res" value="{{ r[0] }}" {% if r[0]=='1440p' %}checked{% endif %}><span>{{ r[1] }}</span></label>{% endfor %}
   </div>
   <div id="result" class="result" aria-live="polite"></div>
   <p class="muted small">Estimates only. See <a href="{{ base }}methodology/">how the score works</a>.</p>
@@ -30,14 +30,14 @@
 
 <section class="grid2">
   <div>
-    <h2>Popular graphics cards</h2>
+    <h2>Start from a graphics card</h2>
     <ul class="cols">{% for g in gpus[:16] %}<li><a href="{{ base }}best-cpu-for/{{ g.slug }}/">Best CPU for {{ g.short }}</a></li>{% endfor %}</ul>
-    <p><a href="{{ base }}gpu/">All {{ gpus|length }} GPUs →</a></p>
+    <p><a href="{{ base }}gpu/">All {{ gpus|length }} GPUs</a></p>
   </div>
   <div>
-    <h2>Popular processors</h2>
+    <h2>Start from a processor</h2>
     <ul class="cols">{% for c in cpus[:16] %}<li><a href="{{ base }}best-gpu-for/{{ c.slug }}/">Best GPU for {{ c.short }}</a></li>{% endfor %}</ul>
-    <p><a href="{{ base }}cpu/">All {{ cpus|length }} CPUs →</a></p>
+    <p><a href="{{ base }}cpu/">All {{ cpus|length }} CPUs</a></p>
   </div>
 </section>
 
