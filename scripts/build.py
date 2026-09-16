@@ -4,6 +4,7 @@
 Usage: build.py [--base /partpair/] [--origin https://example.com]
 """
 import argparse
+import hashlib
 import json
 import shutil
 from datetime import date
@@ -76,8 +77,13 @@ def main():
     origin = args.origin.rstrip("/")
 
     cpus, gpus = load()
+    # Content hash of static assets → cache-busting query on every asset URL.
+    h = hashlib.md5()
+    for f in sorted((ROOT / "static").glob("*")):
+        h.update(f.read_bytes())
+    asset_v = h.hexdigest()[:8]
     env = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=select_autoescape(["html"]))
-    env.globals.update(site=SITE, base=base, origin=origin, today=date.today().isoformat(), adsense_pub=args.adsense_pub,
+    env.globals.update(site=SITE, base=base, origin=origin, today=date.today().isoformat(), adsense_pub=args.adsense_pub, v=asset_v,
                        resolutions=RESOLUTIONS, cpus=cpus, gpus=gpus)
 
     if DIST.exists():

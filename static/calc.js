@@ -1,6 +1,8 @@
 (async function () {
-  const base = document.querySelector('link[href$="static/style.css"]').getAttribute('href').replace('static/style.css', '');
-  const data = await (await fetch(base + 'static/parts.json')).json();
+  const cssHref = document.querySelector('link[href*="static/style.css"]').getAttribute('href');
+  const v = (cssHref.match(/\?v=([^&]+)/) || [])[1] || '';
+  const base = cssHref.replace(/static\/style\.css.*$/, '');
+  const data = await (await fetch(base + 'static/parts.json?v=' + v)).json();
   const RES = { '1080p': [45, 0.62], '1440p': [40, 0.60], '4k': [30, 0.50] };
   const TIERS = [450, 550, 650, 750, 850, 1000, 1200, 1600];
   const LABELS = { balanced: 'balanced', mild: 'mild CPU bottleneck', moderate: 'moderate CPU bottleneck', severe: 'severe CPU bottleneck', 'gpu-bound': 'GPU-bound (normal)', overkill: 'CPU overkill' };
