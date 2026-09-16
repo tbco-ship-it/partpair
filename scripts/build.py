@@ -70,13 +70,14 @@ def main():
     ap.add_argument("--base", default="/")
     ap.add_argument("--origin", default="https://pcpairs.com")
     ap.add_argument("--cname", default="pcpairs.com")
+    ap.add_argument("--adsense-pub", default="", help="AdSense publisher id, e.g. pub-1234567890123456")
     args = ap.parse_args()
     base = args.base if args.base.endswith("/") else args.base + "/"
     origin = args.origin.rstrip("/")
 
     cpus, gpus = load()
     env = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=select_autoescape(["html"]))
-    env.globals.update(site=SITE, base=base, origin=origin, today=date.today().isoformat(),
+    env.globals.update(site=SITE, base=base, origin=origin, today=date.today().isoformat(), adsense_pub=args.adsense_pub,
                        resolutions=RESOLUTIONS, cpus=cpus, gpus=gpus)
 
     if DIST.exists():
@@ -171,6 +172,8 @@ def main():
     (DIST / ".nojekyll").write_text("")
     key = (ROOT / "static/indexnow-key.txt").read_text().strip()
     (DIST / f"{key}.txt").write_text(key + "\n")
+    if args.adsense_pub:
+        (DIST / "ads.txt").write_text(f"google.com, {args.adsense_pub}, DIRECT, f08c47fec0942fa0\n")
     if args.cname:
         (DIST / "CNAME").write_text(args.cname + "\n")
     print(f"built {len(urls)} pages -> {DIST}")
