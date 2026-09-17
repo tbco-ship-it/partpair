@@ -18,7 +18,8 @@
     let items = [], active = -1;
     const remembered = localStorage.getItem('pcpairs.' + kind);
     const initial = list.find(x => x.slug === remembered) || list[Math.min(6, list.length - 1)];
-    choose(initial, false);
+    // Home landing: fields start empty — nothing is shown until the visitor picks both parts (a remembered pair is offered as a chip instead).
+    if (document.documentElement.classList.contains('landing')) { lastPick[kind] = list.find(x => x.slug === remembered) || null; pickers[kind] = choose; } else choose(initial, false);
 
     function choose(part, fire = true) {
       picked[kind] = part; input.value = part.name; input.dataset.slug = part.slug;
@@ -73,9 +74,34 @@
     (function step(t) { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3); el.textContent = fmt(target * e); if (k < 1) requestAnimationFrame(step); })(t0);
   }
 
+  // Home: the first result ends the landing state — hero + card glide up from centre (FLIP on transform) while the hidden sections below are armed to reveal.
+  function leaveLanding() {
+    const html = document.documentElement; if (!html.classList.contains('landing')) return;
+    const stage = document.getElementById('stage'), hero = stage.firstElementChild;
+    const y0 = hero.getBoundingClientRect().top;
+    html.classList.remove('landing');
+    const dy = y0 - hero.getBoundingClientRect().top;
+    if (dy > 0 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // transform, not padding: the glide must not register as layout shift (CLS)
+      stage.style.transition = 'none'; stage.style.transform = `translateY(${dy}px)`; void stage.offsetHeight;
+      stage.style.transition = 'transform 1s cubic-bezier(.16,1,.3,1)'; stage.style.transform = 'translateY(0)';
+      stage.addEventListener('transitionend', () => { stage.style.transition = ''; stage.style.transform = ''; }, { once: true });
+    }
+    if (window.__reveal) window.__reveal(document.getElementById('below'), true, 500);
+  }
+  // Result rises in Toss-style: label → number → title → beam → text → actions, 90ms apart.
+  function riseIn() {
+    const sheet = out.querySelector('.sheet'); if (!sheet) return;
+    out.classList.remove('is-in'); out.classList.add('reveal');
+    [sheet, ...sheet.children].forEach((el, i) => { el.classList.add('rv'); el.style.setProperty('--d', (i * 90) + 'ms'); });
+    void out.offsetHeight; out.classList.add('is-in');
+  }
+  const lastPick = {}, pickers = {};
   function render() {
     const cpu = picked.cpus, gpu = picked.gpus;
     if (!cpu || !gpu) return;
+    const first = document.documentElement.classList.contains('landing');
+    leaveLanding();
     const href = base + 'bottleneck/' + cpu.slug + '-vs-' + gpu.slug + '/';
     if (out) {
       const res = (document.querySelector('input[name=res]:checked') || {}).value || '1440p';
@@ -96,6 +122,7 @@
       psuOut.innerHTML = `<section class="sheet balanced"><p class="sheet-label">Recommended power supply</p><div class="sheet-num"><span class="num">${p.rec}</span><span class="pct">W</span></div><p class="sheet-title">Recommended power supply</p><p class="sheet-text">Estimated peak load ${p.load} W: CPU ${cpu.tdp} W, graphics card ${gpu.tdp} W, about 100 W for the rest.</p><p class="sheet-actions"><a class="next" href="${href}">Bottleneck check for this pair</a></p></section>`;
     }
     document.querySelectorAll('.sheet-num .num').forEach(countUp);
+    if (first) riseIn();
   }
 
   document.addEventListener('click', e => {
@@ -104,5 +131,11 @@
   });
   document.querySelectorAll('input.pick').forEach(picker);
   document.querySelectorAll('input[name=res]').forEach(el => el.addEventListener('change', render));
+  const chip = document.getElementById('last');
+  if (chip && lastPick.cpus && lastPick.gpus) {
+    document.getElementById('last-name').textContent = `${short(lastPick.cpus.name)} + ${short(lastPick.gpus.name)}`;
+    chip.hidden = false;
+    chip.addEventListener('click', () => { pickers.cpus(lastPick.cpus, false); pickers.gpus(lastPick.gpus, false); render(); });
+  }
   render();
 })();

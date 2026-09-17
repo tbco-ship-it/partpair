@@ -3,8 +3,10 @@
 {% block description %}Free bottleneck calculator for {{ cpus|length }} CPUs and {{ gpus|length }} graphics cards. Pick your parts and see which one limits performance at 1080p, 1440p and 4K, and what PSU you need.{% endblock %}
 {% block head %}
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"{{ site }} Bottleneck Calculator","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"{{ origin }}{{ base }}"}</script>
+<script>document.documentElement.classList.add('landing')</script>
 {% endblock %}
 {% block content %}
+<div class="stage" id="stage">
 <section class="hero">
   <h1>Do these two parts belong together?</h1>
   <p>Pick a processor and a graphics card. You get one number: how much one holds the other back at your resolution, and the power supply the pair needs.</p>
@@ -25,10 +27,13 @@
     </div>
   </div>
   <p class="muted small">Estimates only. See <a href="{{ base }}methodology/">how the score works</a>.</p>
+  <button type="button" class="last" id="last" hidden><span>Last build</span><b id="last-name"></b></button>
 </div>
 <div id="result" class="result" aria-live="polite"></div>
 </section>
+</div>
 
+<div class="below" id="below">
 <div class="ad-slot"><!-- ad: home_below_calc --></div>
 
 <section class="grid2">
@@ -49,5 +54,6 @@
   <h2>How to read the percentage</h2>
   <p>The percentage is how much faster the limiting part would need to be before the other part became the limit. Under 10% is balanced. 10–25% is mild and rarely worth spending money on. 25–40% is where an upgrade of the slower part gives visible gains. Above 40% one part is clearly mismatched.</p>
 </section>
+</div>
 <script src="{{ base }}static/calc.js?v={{ v }}" defer></script>
 {% endblock %}
