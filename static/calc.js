@@ -24,7 +24,7 @@
     function choose(part, fire = true) {
       picked[kind] = part; input.value = part.name; input.dataset.slug = part.slug;
       localStorage.setItem('pcpairs.' + kind, part.slug);
-      close(); if (fire) render();
+      close(); if (fire) render(true);
     }
     function open(q) {
       const nq = norm(q);
@@ -97,7 +97,12 @@
     void out.offsetHeight; out.classList.add('is-in');
   }
   const lastPick = {}, pickers = {};
-  function render() {
+  // On a phone the result sits below the form (often behind the browser's bottom bar): bring it into view so a tap visibly did something.
+  // Layout position (offsetTop chain), not the rendered box: right after the first result the stage is mid-glide (translateY) and
+  // scrollIntoView would land ~100px too far down; scroll-margin-top keeps the target below the sticky header.
+  const bringIntoView = el => { if (innerWidth >= 900) return; setTimeout(() => { let y = 0; for (let e = el; e; e = e.offsetParent) y += e.offsetTop; y -= parseFloat(getComputedStyle(el).scrollMarginTop) || 0; scrollTo({ top: y, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }, 60); };
+  // scroll=true: a user action (pick, resolution, chip) produced this result; the initial render never scrolls.
+  function render(scroll) {
     const cpu = picked.cpus, gpu = picked.gpus;
     if (!cpu || !gpu) return;
     const first = document.documentElement.classList.contains('landing');
@@ -123,6 +128,7 @@
     }
     document.querySelectorAll('.sheet-num .num').forEach(countUp);
     if (first) riseIn();
+    if (scroll === true && out) bringIntoView(out);
   }
 
   document.addEventListener('click', e => {
@@ -130,12 +136,12 @@
     if (typeof gtag === 'function') gtag('event', 'next_action', { label: a.textContent.trim(), href: a.getAttribute('href') });
   });
   document.querySelectorAll('input.pick').forEach(picker);
-  document.querySelectorAll('input[name=res]').forEach(el => el.addEventListener('change', render));
+  document.querySelectorAll('input[name=res]').forEach(el => el.addEventListener('change', () => render(true)));
   const chip = document.getElementById('last');
   if (chip && lastPick.cpus && lastPick.gpus) {
     document.getElementById('last-name').textContent = `${short(lastPick.cpus.name)} + ${short(lastPick.gpus.name)}`;
     chip.hidden = false;
-    chip.addEventListener('click', () => { pickers.cpus(lastPick.cpus, false); pickers.gpus(lastPick.gpus, false); render(); });
+    chip.addEventListener('click', () => { pickers.cpus(lastPick.cpus, false); pickers.gpus(lastPick.gpus, false); render(true); });
   }
   render();
 })();
