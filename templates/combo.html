@@ -5,7 +5,7 @@
 {% block head %}
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"{{ site }}","item":"{{ origin }}{{ base }}"},{"@type":"ListItem","position":2,"name":"{{ c.short }}","item":"{{ origin }}{{ base }}cpu/{{ c.slug }}/"},{"@type":"ListItem","position":3,"name":"{{ c.short }} + {{ g.short }}","item":"{{ origin }}{{ base }}{{ path }}"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"Will the {{ c.short }} bottleneck the {{ g.short }}?","acceptedAnswer":{"@type":"Answer","text":"{% if m.side == 'CPU' and m.pct > 10 %}Yes, at 1440p the {{ c.short }} is estimated to limit the {{ g.short }} by about {{ m.pct }}%. The effect is larger at 1080p and smaller at 4K.{% else %}No. At 1440p the {{ g.short }} is the limiting part, which is the normal state for a gaming PC. The {{ c.short }} has headroom to spare.{% endif %}"}},
+{"@type":"Question","name":"Will the {{ c.short }} bottleneck the {{ g.short }}?","acceptedAnswer":{"@type":"Answer","text":"{% if m.side == 'CPU' and m.pct > 10 %}Yes, at 1440p the {{ c.short }} is estimated to limit the {{ g.short }} by about {{ m.pct }}%. The effect is larger at 1080p and smaller at 4K.{% elif m.side == 'CPU' %}Only slightly: at 1440p the model puts the {{ c.short }} about {{ m.pct }}% short of keeping the {{ g.short }} fully fed, which is within the balanced band. The gap grows at 1080p and closes at 4K.{% else %}No. At 1440p the {{ g.short }} is the limiting part, which is the normal state for a gaming PC. The {{ c.short }} has headroom to spare.{% endif %} This is a model estimate from performance indexes, not a measured FPS loss."}},
 {"@type":"Question","name":"What power supply do I need for a {{ c.short }} and {{ g.short }}?","acceptedAnswer":{"@type":"Answer","text":"Estimated system load is about {{ p.psu.load }} W. A quality {{ p.psu.recommended }} W unit leaves roughly 30% headroom for transient spikes."}},
 {"@type":"Question","name":"Is this pair better at 1080p or 4K?","acceptedAnswer":{"@type":"Answer","text":"{% for r in p.results %}{{ r.label }}: {{ r.side }}-limited {{ r.pct }}% ({{ r.verdict_label }}). {% endfor %}"}}
 ]}</script>
@@ -46,7 +46,7 @@
     <tr><th>Cores / threads</th><td>{{ c.cores }} / {{ c.threads }}</td></tr>
     <tr><th>Max boost</th><td>{{ c.boost }} GHz</td></tr>
     <tr><th>Socket</th><td>{{ c.socket }}</td></tr>
-    <tr><th>Max turbo power</th><td>{{ c.tdp }} W</td></tr>
+    <tr><th>Rated power (TDP / PBP)</th><td>{{ c.tdp }} W <span class="muted">manufacturer default — sustained turbo can be higher</span></td></tr>
     <tr><th>Released</th><td>{{ c.year }}</td></tr>
     <tr><th>Gaming index</th><td>{{ c.game }} / 100</td></tr>
     <tr><th>Multi-core index</th><td>{{ c.work }} / 100</td></tr>
@@ -62,7 +62,7 @@
 </div>
 
 <h2>Power supply</h2>
-<p class="prose">CPU {{ c.tdp }} W + GPU {{ g.tdp }} W + about 100 W for motherboard, memory, storage and fans gives an estimated peak load of <strong>{{ p.psu.load }} W</strong>. We recommend a <strong>{{ p.psu.recommended }} W</strong> unit (80 Plus Gold or better) so transient spikes from the graphics card stay inside the PSU's comfort zone. Try other pairs in the <a href="{{ base }}psu-calculator/">PSU calculator</a>.</p>
+<p class="prose">CPU {{ c.tdp }} W + GPU {{ g.tdp }} W + about 100 W for motherboard, memory, storage and fans gives an estimated load of <strong>{{ p.psu.load }} W</strong> (using each part's rated power, not measured peaks). Our model suggests a <strong>{{ p.psu.recommended }} W</strong> unit (80 Plus Gold or better); if the card maker's own minimum-PSU figure is higher, follow the card maker. Try other pairs in the <a href="{{ base }}psu-calculator/">PSU calculator</a>.</p>
 
 <div class="ad-slot"><!-- ad: combo_mid --></div>
 

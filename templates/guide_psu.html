@@ -14,7 +14,7 @@
 <h2>3. You will upgrade the card before the PSU</h2>
 <p>A good unit lasts two or three GPU generations. Buying a size up today usually costs less than replacing the supply with the next card.</p>
 <h2>How the calculator estimates it</h2>
-<p>Estimated load = CPU maximum turbo power + GPU board power + 100 W for the motherboard, memory, storage and fans. Recommended supply = the first common size at or above 1.3× that load. The 1.3 factor is where the three points above meet: it keeps typical gaming load near 60–70% of the rating and leaves room for spikes. It is deliberately conservative for small systems — a 450 W unit is fine for an office PC even if the table says 550 W for a low-end gaming pair.</p>
+<p>Estimated load = CPU rated power (TDP / PBP, the manufacturer default — sustained turbo can exceed it) + GPU board power + 100 W for the motherboard, memory, storage and fans. Recommended supply = the first common size at or above 1.3× that load. The 1.3 factor is where the three points above meet: it keeps typical gaming load near 60–70% of the rating and leaves room for spikes. It is deliberately conservative for small systems — a 450 W unit is fine for an office PC even if the table says 550 W for a low-end gaming pair.</p>
 </div>
 <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Graphics card</th><th>CPU</th><th>Estimated load</th><th>Recommended PSU</th></tr></thead><tbody>
 {% for r in psu_rows %}<tr><td><a href="{{ base }}gpu/{{ r.gpu.slug }}/">{{ r.gpu.short }}</a></td><td><a href="{{ base }}cpu/{{ r.cpu.slug }}/">{{ r.cpu.short }}</a></td><td>{{ r.load }} W</td><td><strong>{{ r.recommended }} W</strong></td></tr>{% endfor %}

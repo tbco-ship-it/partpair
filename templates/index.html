@@ -52,7 +52,7 @@
   <p>In a game, every frame needs the CPU to prepare draw calls, physics and AI, and then the GPU to render pixels. Whichever finishes last sets your frame rate. If the GPU is waiting on the CPU, you are <strong>CPU-limited</strong>; if the CPU is idling while the GPU grinds through pixels, you are <strong>GPU-limited</strong>. Being mildly GPU-limited is the normal, healthy state for a gaming PC: it means you are getting everything you paid for out of the graphics card.</p>
   <p>Resolution shifts the balance. At 1080p the GPU has little work per frame, so a fast CPU matters most; at 4K the GPU does four times the pixel work of 1080p and even a mid-range CPU can keep up. That is why the same pair can read "CPU bottleneck" at 1080p and "balanced" at 4K.</p>
   <h2>How to read the percentage</h2>
-  <p>The percentage is how much faster the limiting part would need to be before the other part became the limit. Under 10% is balanced. 10–25% is mild and rarely worth spending money on. 25–40% is where an upgrade of the slower part gives visible gains. Above 40% one part is clearly mismatched.</p>
+  <p>The percentage is how far the limiting part's performance index falls short of what this pairing needs at that resolution — a model estimate from published performance indexes, not a measured FPS loss or utilisation figure. CPU-limited: under 10% balanced, 10–25% mild and rarely worth spending money on, 25–40% where an upgrade of the CPU gives visible gains, above 40% clearly mismatched. GPU-limited (the normal state for a gaming PC): up to 20% balanced, 20–40% GPU-bound, above 40% the CPU is overkill for the card.</p>
 </section>
 </div>
 <script src="{{ base }}static/calc.js?v={{ v }}" defer></script>

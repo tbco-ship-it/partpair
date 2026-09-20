@@ -2,12 +2,12 @@
 {% block title %}{{ gpu.short }} PSU requirements: {{ mid.recommended }} W recommended ({{ gpu.tdp }} W card, {{ low.recommended }}–{{ high.recommended }} W by CPU) | {{ site }}{% endblock %}
 {% block description %}{{ gpu.name }} board power is {{ gpu.tdp }} W. Recommended PSU wattage with budget, mid-range and high-end CPUs, transient-spike headroom and connector notes.{% endblock %}
 {% block head %}
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What power supply do I need for the {{ gpu.short }}?","acceptedAnswer":{"@type":"Answer","text":"With a typical mid-range CPU the {{ gpu.short }} needs about a {{ mid.recommended }} W power supply (estimated load {{ mid.load }} W). With a 65 W-class CPU {{ low.recommended }} W is enough; with a 250 W-class flagship CPU plan on {{ high.recommended }} W."}},{"@type":"Question","name":"How much power does the {{ gpu.short }} draw?","acceptedAnswer":{"@type":"Answer","text":"Rated board power is {{ gpu.tdp }} W. Brief transient spikes can reach roughly {{ (gpu.tdp * 1.5)|round|int }} W, which is why we size the PSU with 30% headroom."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What power supply do I need for the {{ gpu.short }}?","acceptedAnswer":{"@type":"Answer","text":"With a typical mid-range CPU the {{ gpu.short }} needs about a {{ mid.recommended }} W power supply (estimated load {{ mid.load }} W). With a 65 W-class CPU {{ low.recommended }} W is enough; with a 250 W-class flagship CPU plan on {{ high.recommended }} W."}},{"@type":"Question","name":"How much power does the {{ gpu.short }} draw?","acceptedAnswer":{"@type":"Answer","text":"Rated board power is {{ gpu.tdp }} W. Modern cards draw brief transient spikes above that figure (we have no measured spike value for this card), which is why we size the PSU with 30% headroom and defer to the card maker's minimum-PSU figure where it is higher."}}]}</script>
 {% endblock %}
 {% block content %}
 <nav class="crumbs"><a href="{{ base }}">Home</a> › <a href="{{ base }}gpu/{{ gpu.slug }}/">{{ gpu.short }}</a> › PSU</nav>
 <h1>{{ gpu.short }} power supply requirements</h1>
-<p class="prose">The {{ gpu.name }} is rated at <strong>{{ gpu.tdp }} W</strong> board power. Short transient spikes can reach about {{ (gpu.tdp * 1.5)|round|int }} W, so the power supply must have headroom beyond the sum of the parts. Here is what that means with three classes of processor.</p>
+<p class="prose">The {{ gpu.name }} is rated at <strong>{{ gpu.tdp }} W</strong> board power. Modern cards draw short transient spikes above their rating (we do not have a measured spike figure for this card), so the power supply needs headroom beyond the sum of the parts. The numbers below are our model's estimate from rated power; board-partner cards can specify a higher minimum PSU or a different connector layout, so check the exact model's spec sheet before buying.</p>
 <div class="ad-slot"><!-- ad: psu_for_top --></div>
 <table class="tbl"><thead><tr><th>CPU class</th><th>Example</th><th>Estimated load</th><th>Recommended PSU</th></tr></thead>
 <tbody>
@@ -17,7 +17,7 @@
 </tbody></table>
 <div class="prose">
 <h2>How we calculate it</h2>
-<p>Estimated load = CPU maximum turbo power + {{ gpu.tdp }} W for the card + 100 W for motherboard, memory, storage and fans. We multiply by 1.3 for transient headroom and round up to the next common PSU size. Full details on the <a href="{{ base }}methodology/">methodology page</a>.</p>
+<p>Estimated load = CPU rated power (TDP / PBP, manufacturer default) + {{ gpu.tdp }} W for the card + 100 W for motherboard, memory, storage and fans. We multiply by 1.3 for transient headroom and round up to the next common PSU size. Full details on the <a href="{{ base }}methodology/">methodology page</a>.</p>
 <h2>Connectors</h2>
 <p>{% if gpu.tdp >= 300 %}Cards in this power class use the 12V-2x6 (12VHPWR) connector or three 8-pin PCIe connectors depending on the board partner. Prefer an ATX 3.x power supply with a native 12V-2x6 cable over adapters.{% elif gpu.tdp >= 200 %}Expect two 8-pin PCIe connectors or a single 12V-2x6 depending on the model. Most 650–850 W units from the last five years have both.{% else %}A single 8-pin (or 6+2-pin) PCIe connector is typical; some low-power models draw everything from the slot. Almost any modern PSU qualifies.{% endif %}</p>
 <h2>When to step up a tier</h2>
