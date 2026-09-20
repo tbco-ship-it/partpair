@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ gpu.short }} power supply requirements: what PSU wattage do you need? — {{ site }}{% endblock %}
+{% block title %}{{ gpu.short }} PSU requirements: {{ mid.recommended }} W recommended ({{ gpu.tdp }} W card, {{ low.recommended }}–{{ high.recommended }} W by CPU) | {{ site }}{% endblock %}
 {% block description %}{{ gpu.name }} board power is {{ gpu.tdp }} W. Recommended PSU wattage with budget, mid-range and high-end CPUs, transient-spike headroom and connector notes.{% endblock %}
 {% block head %}
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What power supply do I need for the {{ gpu.short }}?","acceptedAnswer":{"@type":"Answer","text":"With a typical mid-range CPU the {{ gpu.short }} needs about a {{ mid.recommended }} W power supply (estimated load {{ mid.load }} W). With a 65 W-class CPU {{ low.recommended }} W is enough; with a 250 W-class flagship CPU plan on {{ high.recommended }} W."}},{"@type":"Question","name":"How much power does the {{ gpu.short }} draw?","acceptedAnswer":{"@type":"Answer","text":"Rated board power is {{ gpu.tdp }} W. Brief transient spikes can reach roughly {{ (gpu.tdp * 1.5)|round|int }} W, which is why we size the PSU with 30% headroom."}}]}</script>

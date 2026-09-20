@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Best GPU for the {{ cpu.short }} in 2026 (no wasted CPU, no bottleneck) — {{ site }}{% endblock %}
+{% block title %}Best GPU for the {{ cpu.short }} in 2026{% if top %}: {{ top[0].gpu.short }} first, {{ top|length }} no-bottleneck picks{% endif %} | {{ site }}{% endblock %}
 {% block description %}Which graphics card matches the {{ cpu.name }}? Cards ranked by how fully they use this processor at 1440p without becoming CPU-bottlenecked, plus the ceiling beyond which faster GPUs are wasted.{% endblock %}
 {% block head %}
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the best GPU for the {{ cpu.short }}?","acceptedAnswer":{"@type":"Answer","text":"At 1440p the {{ cpu.short }} is best matched with {% for p in top[:3] %}{{ p.gpu.short }}{% if not loop.last %}, {% endif %}{% endfor %}. Cards with a 1440p index above about {{ cap }} start to be held back by this processor."}}]}</script>
