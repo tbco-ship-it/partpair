@@ -166,7 +166,7 @@ def main():
     write("guide/cpu-bottleneck-explained/", "guide_bottleneck.html", needed_rows=needed_rows, bal=bal)
     write("guide/psu-headroom/", "guide_psu.html", psu_rows=psu_rows, tiers=tiers)
     write("guide/upgrade-cpu-or-gpu/", "guide_upgrade.html", bal=bal, needed_rows=needed_rows)
-    for page in ("about", "methodology", "privacy", "contact"):
+    for page in ("about", "methodology", "privacy", "terms", "contact"):
         write(f"{page}/", f"{page}.html")
 
     # Hub pages

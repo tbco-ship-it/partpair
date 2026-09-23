@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Terms of use — {{ site }}{% endblock %}
+{% block content %}
+<h1>Terms of use</h1>
+<div class="prose">
+<p>{{ site }} is a free informational tool for comparing PC parts. There are no accounts and nothing to sign up for.</p>
+<p>Performance indexes, bottleneck scores and power-supply figures are estimates built from the published sources described on our <a href="{{ base }}methodology/">methodology page</a>. They may be out of date or wrong.</p>
+<p>Nothing on this site is professional advice or a guarantee that parts are compatible or will perform as shown. Confirm specifications and compatibility with the manufacturer or retailer before you buy.</p>
+<p>The site is provided as is, without warranty of any kind. To the extent permitted by law, we are not liable for decisions made or losses incurred based on it.</p>
+<p>The site shows ads through Google AdSense and may contain affiliate links. Any affiliate link will be labelled where it appears.</p>
+<p>Corrections and questions: see the <a href="{{ base }}contact/">contact page</a>. Last updated {{ today }}.</p>
+</div>
+{% endblock %}
