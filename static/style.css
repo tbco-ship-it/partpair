@@ -592,3 +592,7 @@ html.landing .below{display:none}
 .last b{color:var(--text);font-weight:600}
 .last:hover{border-color:var(--blue);color:var(--blue)}
 #result{scroll-margin-top:calc(var(--hdr,64px) + 16px)}/* phone: the result scrolls to just below the sticky header */
+.res-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:14px 0 10px;font-size:.86rem;color:var(--text-2)}
+.res-row .res-k{flex-basis:100%;font-size:.8rem;margin-bottom:2px}
+.res-row span:not(.res-k){padding:4px 10px;border-radius:999px;background:rgba(127,127,127,.12)}
+.res-row span.cur{box-shadow:inset 0 0 0 1.5px currentColor}

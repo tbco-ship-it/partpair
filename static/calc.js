@@ -117,10 +117,12 @@
         : r.verdict === 'balanced' ? `Well matched at ${res}. The ${r.side === 'CPU' ? short(cpu.name) : short(gpu.name)} is the slightly busier part, by about ${r.pct}%.`
         : r.side === 'CPU' ? `The ${short(cpu.name)} holds the ${short(gpu.name)} back by about ${r.pct}% at ${res}.`
         : `The ${short(gpu.name)} is the limiting part at ${res}, which is the healthy direction. The CPU keeps ${r.pct}% in reserve.`;
+      const resName = k => k === '4k' ? '4K' : k;
+      const across = Object.keys(RES).map(k => { const x = bottleneck(cpu, gpu, k); return `<span${k === res ? ' class="cur"' : ''}>${resName(k)} <b>${x.pct < 3 ? 'even' : x.side + ' ' + x.pct + '%'}</b></span>`; }).join('');
       let next = '';
       if (r.side === 'CPU' && r.pct > 10) next = `<a class="next" href="${base}best-cpu-for/${gpu.slug}/">See processors that fix this</a>`;
       else if (r.side === 'GPU' && r.pct > 25) next = `<a class="next" href="${base}best-gpu-for/${cpu.slug}/">See cards that use this CPU fully</a>`;
-      out.innerHTML = `<section class="sheet ${r.verdict}"><p class="sheet-label">Bottleneck at ${res}</p><div class="sheet-num"><span class="num">${r.pct}</span><span class="pct">%</span></div><p class="sheet-title">${title}</p><div class="beam ${r.side.toLowerCase()}" role="img" aria-label="${r.side} is the limiting part by ${r.pct} percent"><span class="beam-label">CPU</span><span class="beam-track"><span class="beam-fill" style="width:${r.pct / 2}%"></span></span><span class="beam-label">GPU</span></div><p class="sheet-text">${msg} Suggested power supply: ${p.rec} W.</p><p class="sheet-actions">${next}<a class="next" href="${href}">Full breakdown for this pair</a></p></section>`;
+      out.innerHTML = `<section class="sheet ${r.verdict}"><p class="sheet-label">Bottleneck at ${res}</p><div class="sheet-num"><span class="num">${r.pct}</span><span class="pct">%</span></div><p class="sheet-title">${title}</p><div class="beam ${r.side.toLowerCase()}" role="img" aria-label="${r.side} is the limiting part by ${r.pct} percent"><span class="beam-label">CPU</span><span class="beam-track"><span class="beam-fill" style="width:${r.pct / 2}%"></span></span><span class="beam-label">GPU</span></div><p class="res-row"><span class="res-k">Limiting part</span>${across}</p><p class="sheet-text">${msg} Suggested power supply: ${p.rec} W.</p><p class="sheet-actions">${next}<a class="next" href="${href}">Full breakdown for this pair</a></p></section>`;
     }
     if (psuOut) {
       const p = psu(cpu, gpu);
