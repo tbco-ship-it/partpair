@@ -14,7 +14,7 @@ from xml.sax.saxutils import escape
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from model import RESOLUTIONS, bottleneck, gpu_res_scores, psu_watts, short, slugify
+from model import RESOLUTIONS, bottleneck, gpu_res_scores, psu_verdicts, psu_watts, short, slugify
 
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
@@ -24,6 +24,7 @@ SITE = "PCPairs"
 def load():
     cpus = json.loads((ROOT / "data/cpus.json").read_text())
     gpus = json.loads((ROOT / "data/gpus.json").read_text())
+    measured = json.loads((ROOT / "data/psu_measured.json").read_text())
     for c in cpus:
         c["slug"] = slugify(c["name"])
         c["short"] = short(c["name"])
@@ -31,6 +32,7 @@ def load():
         g["slug"] = slugify(g["name"])
         g["short"] = short(g["name"])
         g["scores"] = gpu_res_scores(g["s1440"])
+        g["meas"] = measured[g["short"]]  # every GPU must have a sourced measurement row
     cpus.sort(key=lambda c: -c["game"])
     gpus.sort(key=lambda g: -g["s1440"])
     return cpus, gpus
@@ -202,8 +204,8 @@ def main():
         lowc = next(c for c in by_tdp if c["tdp"] <= 65 and c["year"] >= 2022)
         midc = next(c for c in by_tdp if 120 <= c["tdp"] <= 181 and c["year"] >= 2022)
         highc = next(c for c in reversed(by_tdp) if c["tdp"] >= 250)
-        write(f"psu-for/{g['slug']}/", "psu_for.html", gpu=g, lowc=lowc, midc=midc, highc=highc,
-              low=psu_watts(lowc["tdp"], g["tdp"]), mid=psu_watts(midc["tdp"], g["tdp"]), high=psu_watts(highc["tdp"], g["tdp"]))
+        write(f"psu-for/{g['slug']}/", "psu_for.html", gpu=g, m=g["meas"], lowc=lowc, midc=midc, highc=highc,
+              low=psu_verdicts(g["meas"], lowc["tdp"]), mid=psu_verdicts(g["meas"], midc["tdp"]), high=psu_verdicts(g["meas"], highc["tdp"]))
 
     for c in cpus:
         pairs = [combo(c, g) for g in gpus]

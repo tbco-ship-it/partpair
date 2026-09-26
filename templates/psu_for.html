@@ -1,27 +1,45 @@
 {% extends "base.html" %}
-{% block title %}{{ gpu.short }} PSU requirements: {{ mid.recommended }} W recommended ({{ gpu.tdp }} W card, {{ low.recommended }}–{{ high.recommended }} W by CPU) | {{ site }}{% endblock %}
-{% block description %}{{ gpu.name }} board power is {{ gpu.tdp }} W. Recommended PSU wattage with budget, mid-range and high-end CPUs, transient-spike headroom and connector notes.{% endblock %}
+{% set sp = "spikes" if m.spike_kind == "spikes" else "peak" %}
+{% block title %}{{ gpu.short }} PSU requirements: {{ mid.ok }} W is enough (measured {{ m.avg_w }} W gaming, {{ m.spike_w }} W {{ sp }}) | {{ site }}{% endblock %}
+{% block description %}Is a {{ mid.ok }} W power supply enough for the {{ gpu.short }}? Measured card draw ({{ m.avg_w }} W gaming, {{ m.spike_w }} W {{ sp }}), a 450–1200 W verdict table by CPU, and why PSU calculators disagree.{% endblock %}
 {% block head %}
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What power supply do I need for the {{ gpu.short }}?","acceptedAnswer":{"@type":"Answer","text":"With a typical mid-range CPU the {{ gpu.short }} needs about a {{ mid.recommended }} W power supply (estimated load {{ mid.load }} W). With a 65 W-class CPU {{ low.recommended }} W is enough; with a 250 W-class flagship CPU plan on {{ high.recommended }} W."}},{"@type":"Question","name":"How much power does the {{ gpu.short }} draw?","acceptedAnswer":{"@type":"Answer","text":"Rated board power is {{ gpu.tdp }} W. Modern cards draw brief transient spikes above that figure (we have no measured spike value for this card), which is why we size the PSU with 30% headroom and defer to the card maker's minimum-PSU figure where it is higher."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What power supply do I need for the {{ gpu.short }}?","acceptedAnswer":{"@type":"Answer","text":"With a {{ midc.tdp }} W CPU a {{ mid.ok }} W unit is enough (about {{ mid.sustained }} W sustained gaming load). With a {{ lowc.tdp }} W CPU {{ low.ok }} W is enough; with a {{ highc.tdp }} W CPU plan on {{ high.ok }} W."}},{"@type":"Question","name":"How much power does the {{ gpu.short }} draw?","acceptedAnswer":{"@type":"Answer","text":"TechPowerUp measured {{ m.avg_w }} W average while gaming and {{ m.spike_w }} W {{ 'peak spikes' if sp == 'spikes' else 'peak' }} on the {{ m.review_card }}. Rated board power is {{ m.board_w if m.board_w else gpu.tdp }} W."}}]}</script>
 {% endblock %}
 {% block content %}
 <nav class="crumbs"><a href="{{ base }}">Home</a> › <a href="{{ base }}gpu/{{ gpu.slug }}/">{{ gpu.short }}</a> › PSU</nav>
-<h1>{{ gpu.short }} power supply requirements</h1>
-<p class="prose">The {{ gpu.name }} is rated at <strong>{{ gpu.tdp }} W</strong> board power. Modern cards draw short transient spikes above their rating (we do not have a measured spike figure for this card), so the power supply needs headroom beyond the sum of the parts. The numbers below are our model's estimate from rated power; board-partner cards can specify a higher minimum PSU or a different connector layout, so check the exact model's spec sheet before buying.</p>
+<h1>What PSU do you need for the {{ gpu.short }}?</h1>
+<div class="answer">
+<p><strong>{{ mid.ok }} W is enough</strong> with a {{ midc.tdp }} W CPU such as the {{ midc.short }}{% if mid.atx3 and mid.atx3 < mid.ok %} ({{ mid.atx3 }} W also works if it is an ATX 3.x unit){% endif %}. With a {{ lowc.tdp }} W CPU, {{ low.ok }} W{% if low.atx3 and low.atx3 < low.ok %} ({{ low.atx3 }} W on ATX 3.x){% endif %}. With a {{ highc.tdp }} W CPU, {{ high.ok }} W{% if high.atx3 and high.atx3 < high.ok %} ({{ high.atx3 }} W on ATX 3.x){% endif %}.</p>
+<p class="muted">Based on measured card power, not rated power: {{ m.avg_w }} W average while gaming, {{ m.spike_w }} W {{ 'highest 20 ms spike' if sp == 'spikes' else 'peak reading' }}.</p>
+</div>
 <div class="ad-slot"><!-- ad: psu_for_top --></div>
-<table class="tbl"><thead><tr><th>CPU class</th><th>Example</th><th>Estimated load</th><th>Recommended PSU</th></tr></thead>
+<h2>Is my power supply enough? 450–1200 W</h2>
+<p class="prose">Each cell is the sustained gaming load as a share of the label. ✓ means enough for any decent unit. ✓ ATX 3.x means the steady load fits but the card's measured 20 ms spikes go past the label, so pick an ATX 3.0/3.1 unit, which is designed for short excursions. ✗ means the steady load is over 80% of the label{% if mid.floor %}, or the size is below {{ mid.floor }} W — the smallest unit {{ 'TechPowerUp' if m.tpu_psu_w else 'the maker' }} recommends for this card (short spikes under 20 ms are not in our data, so we never go below it){% endif %}.</p>
+<table class="tbl psu-grid"><thead><tr><th>PSU</th><th>{{ lowc.tdp }} W CPU<br><span class="muted">e.g. <a href="{{ base }}bottleneck/{{ lowc.slug }}-vs-{{ gpu.slug }}/">{{ lowc.short }}</a></span></th><th>{{ midc.tdp }} W CPU<br><span class="muted">e.g. <a href="{{ base }}bottleneck/{{ midc.slug }}-vs-{{ gpu.slug }}/">{{ midc.short }}</a></span></th><th>{{ highc.tdp }} W CPU<br><span class="muted">e.g. <a href="{{ base }}bottleneck/{{ highc.slug }}-vs-{{ gpu.slug }}/">{{ highc.short }}</a></span></th></tr></thead>
 <tbody>
-<tr><td>65 W-class (e.g. Ryzen 5/7 non-X)</td><td><a href="{{ base }}bottleneck/{{ lowc.slug }}-vs-{{ gpu.slug }}/">{{ lowc.short }}</a></td><td>{{ low.load }} W</td><td><strong>{{ low.recommended }} W</strong></td></tr>
-<tr><td>125–180 W-class (mid-range K / X)</td><td><a href="{{ base }}bottleneck/{{ midc.slug }}-vs-{{ gpu.slug }}/">{{ midc.short }}</a></td><td>{{ mid.load }} W</td><td><strong>{{ mid.recommended }} W</strong></td></tr>
-<tr><td>250 W-class (flagship Intel K)</td><td><a href="{{ base }}bottleneck/{{ highc.slug }}-vs-{{ gpu.slug }}/">{{ highc.short }}</a></td><td>{{ high.load }} W</td><td><strong>{{ high.recommended }} W</strong></td></tr>
-</tbody></table>
+{% for i in range(low.rows|length) %}<tr><th>{{ low.rows[i].tier }} W</th>{% for c in (low, mid, high) %}{% set r = c.rows[i] %}<td class="v-{{ r.v }}">{% if r.v == "ok" %}✓{% elif r.v == "atx3" %}✓ ATX 3.x{% else %}✗{% endif %} <span class="muted">{{ r.pct }}%</span></td>{% endfor %}</tr>
+{% endfor %}</tbody></table>
+<p class="muted">Sustained load = card's measured gaming draw + CPU at its rated power (games usually draw less, so this errs high) + 75 W for board, memory, drives and fans. {{ lowc.tdp }} W CPU: {{ low.sustained }} W · {{ midc.tdp }} W CPU: {{ mid.sustained }} W · {{ highc.tdp }} W CPU: {{ high.sustained }} W.</p>
 <div class="prose">
-<h2>How we calculate it</h2>
-<p>Estimated load = CPU rated power (TDP / PBP, manufacturer default) + {{ gpu.tdp }} W for the card + 100 W for motherboard, memory, storage and fans. We multiply by 1.3 for transient headroom and round up to the next common PSU size. Full details on the <a href="{{ base }}methodology/">methodology page</a>.</p>
+<h2>Measured power draw</h2>
+<table class="tbl spec psu-meas"><tbody>
+<tr><th>Gaming average</th><td>{{ m.avg_w }} W</td></tr>
+<tr><th>{{ 'Highest 20 ms spike' if sp == 'spikes' else 'Peak reading while gaming' }}</th><td>{{ m.spike_w }} W</td></tr>
+<tr><th>Rated board power</th><td>{% if m.board_w %}{{ m.board_w }} W (<a href="{{ m.board_src }}" rel="nofollow noopener" target="_blank">{{ 'NVIDIA' if 'nvidia' in m.board_src else 'AMD' if 'amd' in m.board_src else 'Intel' }}</a>){% else %}not listed by the maker any more{% endif %}</td></tr>
+<tr><th>Card measured</th><td>{{ m.review_card }}{% if not m.reference %} — a board-partner card; the reference design may draw a little less{% endif %}</td></tr>
+</tbody></table>
+<p>Measurements are from <a href="{{ m.review_url }}" rel="nofollow noopener" target="_blank">TechPowerUp's review</a>, which records card-only power with dedicated equipment.{% if sp == 'peak' %} This is an older review: its peak figure comes from a slower sampling method, so real short spikes can be higher than shown. We therefore judge this card on its sustained load only.{% endif %}</p>
+<h2>Why PSU recommendations disagree</h2>
+<ul>
+<li><strong>{{ 'NVIDIA' if gpu.brand == 'NVIDIA' else 'AMD' if gpu.brand == 'AMD' else 'Intel' }}</strong>: {% if m.vendor_psu_w %}{{ m.vendor_psu_w }} W (<a href="{{ m.vendor_psu_src }}" rel="nofollow noopener" target="_blank">spec page</a>). The maker covers any CPU and any power supply quality, so its figure is deliberately generous.{% else %}does not publish a recommended PSU for this card.{% endif %}</li>
+<li><strong>TechPowerUp</strong>: {% if m.tpu_psu_w %}{{ m.tpu_psu_w }} W minimum, sized from the card's measured draw.{% else %}no minimum listed in this review.{% endif %}</li>
+<li><strong>Most online calculators</strong> add up rated power (TDP) for every part and then add a margin. Rated power is not what a card or CPU actually draws in games, which is why their answers swing by 100 W or more.</li>
+<li><strong>This page</strong>: {{ mid.ok }} W with a {{ midc.tdp }} W CPU, from measured card draw with the steady load kept at or under 80% of the label{% if mid.floor %}, and never below {{ mid.floor }} W{% endif %}.</li>
+</ul>
 <h2>Connectors</h2>
 <p>{% if gpu.tdp >= 300 %}Cards in this power class use the 12V-2x6 (12VHPWR) connector or three 8-pin PCIe connectors depending on the board partner. Prefer an ATX 3.x power supply with a native 12V-2x6 cable over adapters.{% elif gpu.tdp >= 200 %}Expect two 8-pin PCIe connectors or a single 12V-2x6 depending on the model. Most 650–850 W units from the last five years have both.{% else %}A single 8-pin (or 6+2-pin) PCIe connector is typical; some low-power models draw everything from the slot. Almost any modern PSU qualifies.{% endif %}</p>
-<h2>When to step up a tier</h2>
-<p>Heavy overclocking, custom water cooling, more than four drives or a lot of RGB each add tens of watts. If two or more apply, buy the next size up. Efficiency and fan noise are also best at 50–70% load, which the 1.3× rule already lands you in.</p>
+<h2>When to step up a size</h2>
+<p>Overclocking, a factory-overclocked card, more than four drives or a lot of fans and RGB each add tens of watts. If two or more apply, take the next size up. Check the exact card's spec sheet too — some board partners list a higher minimum.</p>
 </div>
-<p><a href="{{ base }}psu-calculator/">Try your exact CPU in the PSU calculator</a> <a href="{{ base }}best-cpu-for/{{ gpu.slug }}/">Best CPU for the {{ gpu.short }}</a></p>
+<p><a href="{{ base }}psu-calculator/">Try your exact CPU in the PSU calculator</a> · <a href="{{ base }}best-cpu-for/{{ gpu.slug }}/">Best CPU for the {{ gpu.short }}</a></p>
 {% endblock %}
