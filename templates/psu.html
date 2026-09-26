@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block title %}PSU wattage calculator for your CPU + GPU — {{ site }}{% endblock %}
-{% block description %}Pick your CPU and graphics card and get a power supply recommendation with 30% headroom for transient spikes.{% endblock %}
+{% block description %}Pick your CPU and graphics card and get a power supply size based on the graphics card's measured gaming power and spikes, never below the published recommendations.{% endblock %}
 {% block content %}
 <h1>PSU wattage calculator</h1>
-<p class="prose">Select your parts. We add the CPU's rated power (TDP / PBP, manufacturer default), the GPU's board power and about 100 W for the rest of the system, then apply 30% headroom and round up to a common PSU size.</p>
+<p class="prose">Select your parts. We take the graphics card's measured gaming power from TechPowerUp, add the CPU's rated power (TDP / PBP, manufacturer default) and about 75 W for the rest of the system, and pick the smallest common PSU size that keeps that load at or under 80% of the label and the card's measured spikes under it — never below the card maker's or TechPowerUp's recommendation.</p>
 <section class="calc card">
   <div class="row">
     <label class="field">CPU<input id="cpu" class="pick" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" spellcheck="false" placeholder="Type a processor, e.g. 7800X3D" data-kind="cpus"><ul class="menu" id="cpu-menu" role="listbox" hidden></ul></label>
