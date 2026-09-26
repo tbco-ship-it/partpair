@@ -599,6 +599,6 @@ html.landing .below{display:none}
 .answer{background:var(--surface);border-radius:var(--r-card);padding:18px 20px;margin:12px 0 8px}.answer p{margin:.3em 0}.answer strong{color:var(--text)}
 .psu-grid{font-size:.9rem}.psu-grid th,.psu-grid td{padding:10px 6px;text-align:center}.psu-grid thead th{font-weight:600;line-height:1.3}
 .psu-grid tbody th,.psu-grid tbody th:first-child{text-align:left;color:var(--text);white-space:nowrap}.psu-grid td:last-child,.psu-grid th:last-child{text-align:center}
-.psu-grid td.v-ok{background:var(--green-soft);color:var(--text)}.psu-grid td.v-atx3{background:var(--yellow-soft);color:var(--text)}.psu-grid td.v-no{color:var(--muted)}
+.psu-grid td.v-safe{background:var(--green-soft);color:var(--text)}.psu-grid td.v-quality{background:var(--yellow-soft);color:var(--text)}.psu-grid td.v-no{color:var(--muted)}
 .psu-grid td .muted{font-size:.8rem;display:block}
 .tbl.psu-meas tbody td{white-space:normal}

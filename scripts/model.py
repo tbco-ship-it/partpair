@@ -61,35 +61,35 @@ def bottleneck(cpu_game: float, gpu_s1440: float, res_key: str) -> dict:
 
 
 REST_W = 75  # motherboard, RAM, storage, fans in a typical gaming load
-TABLE_TIERS = [450, 550, 650, 750, 850, 1000, 1200]
 
 
-def psu_verdicts(meas: dict, cpu_tdp: int) -> dict:
-    """PSU sizes against measured card draw. Sustained load must stay at or under
-    80% of the label; a measured 20 ms spike (TPU "spikes") above the label means
-    the size only works with an ATX 3.x unit, which is built for short excursions.
-    Never go below the reviewer's measured-draw minimum (or the maker's figure when
-    the review gives none): 20 ms samples miss shorter spikes."""
-    floor = meas["tpu_psu_w"] or meas["vendor_psu_w"] or 0
+def psu_pick(meas: dict, cpu_tdp: int) -> dict:
+    """PSU sizes from measured card draw (mirrored in static/calc.js).
+
+    A size fits when the sustained gaming load is at most 80% of the label (70% when
+    the review has no 20 ms spike data) and, when spikes were measured, the spike
+    load stays under the label. "safe" also meets the higher of the card maker's
+    and the reviewer's recommendation. "quality" fits the measured draw and meets the
+    reviewer's minimum but sits below the maker's higher figure: only for a good unit, and
+    only when spikes were measured."""
     sustained = meas["avg_w"] + cpu_tdp + REST_W
     spike = meas["spike_w"] + cpu_tdp + REST_W if meas["spike_kind"] == "spikes" else None
+    cap = 0.80 if spike is not None else 0.70
+    maker = max(meas["vendor_psu_w"] or 0, meas["tpu_psu_w"] or 0)  # the higher recommendation
+    reviewer = meas["tpu_psu_w"] or maker
     rows = []
-    for t in TABLE_TIERS:
+    for t in PSU_TIERS:
         pct = round(100 * sustained / t)
-        if pct > 80 or t < floor:
-            v = "no"
-        elif spike is not None and spike > t:
-            v = "atx3"
+        fits = sustained <= cap * t and (spike is None or spike <= t)
+        if fits and t >= maker:
+            v = "safe"
+        elif fits and spike is not None and t >= reviewer:
+            v = "quality"
         else:
-            v = "ok"
+            v = "no"
         rows.append({"tier": t, "pct": pct, "v": v})
-    ok = next((r["tier"] for r in rows if r["v"] == "ok"), None)
-    atx3 = next((r["tier"] for r in rows if r["v"] in ("ok", "atx3")), None)
-    return {"sustained": sustained, "spike": spike, "rows": rows, "ok": ok, "atx3": atx3, "floor": floor}
-
-
-def psu_watts(cpu_tdp: int, gpu_tdp: int) -> dict:
-    load = cpu_tdp + gpu_tdp + 100  # board, RAM, storage, fans
-    target = load * 1.3
-    rec = next((t for t in PSU_TIERS if t >= target), PSU_TIERS[-1])
-    return {"load": load, "recommended": rec}
+    safe = next(r["tier"] for r in rows if r["v"] == "safe")
+    quality = next((r["tier"] for r in rows if r["v"] == "quality"), None)
+    return {"sustained": sustained, "spike": spike, "rows": rows, "safe": safe, "quality": quality,
+            "maker": maker, "cap": round(cap * 100),
+            "load": sustained, "recommended": safe}  # load/recommended: names the older templates use

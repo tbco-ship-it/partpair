@@ -14,7 +14,7 @@ from xml.sax.saxutils import escape
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from model import RESOLUTIONS, bottleneck, gpu_res_scores, psu_verdicts, psu_watts, short, slugify
+from model import RESOLUTIONS, bottleneck, gpu_res_scores, psu_pick, short, slugify
 
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
@@ -43,7 +43,7 @@ def combo(cpu, gpu):
     return {
         "cpu": cpu, "gpu": gpu, "results": results,
         "main": results[1],  # 1440p is the headline
-        "psu": psu_watts(cpu["tdp"], gpu["tdp"]),
+        "psu": psu_pick(gpu["meas"], cpu["tdp"]),
         "path": f"bottleneck/{cpu['slug']}-vs-{gpu['slug']}/",
     }
 
@@ -135,7 +135,8 @@ def main():
     # Data blob for the browser calculator
     blob = {
         "cpus": [{"slug": c["slug"], "name": c["name"], "game": c["game"], "tdp": c["tdp"], "socket": c["socket"]} for c in cpus],
-        "gpus": [{"slug": g["slug"], "name": g["name"], "s1440": g["s1440"], "tdp": g["tdp"]} for g in gpus],
+        "gpus": [{"slug": g["slug"], "name": g["name"], "s1440": g["s1440"], "tdp": g["tdp"],
+                  "m": {k: g["meas"][k] for k in ("avg_w", "spike_w", "spike_kind", "vendor_psu_w", "tpu_psu_w")}} for g in gpus],
     }
     (DIST / "static/parts.json").write_text(json.dumps(blob, separators=(",", ":")))
 
@@ -157,7 +158,7 @@ def main():
     psu_rows = []
     for g in tiers:
         for c in (cpu_at(60), cpu_at(80), cs[-1]):
-            w = psu_watts(c["tdp"], g["tdp"])
+            w = psu_pick(g["meas"], c["tdp"])
             psu_rows.append({"gpu": g, "cpu": c, **w})
     # balanced pairs at 1440p: for each GPU tier, the CPU band that scores balanced
     bal = []
@@ -205,7 +206,7 @@ def main():
         midc = next(c for c in by_tdp if 120 <= c["tdp"] <= 181 and c["year"] >= 2022)
         highc = next(c for c in reversed(by_tdp) if c["tdp"] >= 250)
         write(f"psu-for/{g['slug']}/", "psu_for.html", gpu=g, m=g["meas"], lowc=lowc, midc=midc, highc=highc,
-              low=psu_verdicts(g["meas"], lowc["tdp"]), mid=psu_verdicts(g["meas"], midc["tdp"]), high=psu_verdicts(g["meas"], highc["tdp"]))
+              low=psu_pick(g["meas"], lowc["tdp"]), mid=psu_pick(g["meas"], midc["tdp"]), high=psu_pick(g["meas"], highc["tdp"]))
 
     for c in cpus:
         pairs = [combo(c, g) for g in gpus]

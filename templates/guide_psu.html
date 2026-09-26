@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}How much power supply headroom you actually need — {{ site }}{% endblock %}
-{% block description %}Why we recommend 1.3× the estimated load, how we estimate the load, what transient spikes do to modern cards, and a table of recommended PSU wattage for common CPU and GPU combinations.{% endblock %}
+{% block description %}How we size a power supply from measured card draw, what transient spikes do to modern cards, and a table of recommended PSU wattage for common CPU and GPU combinations.{% endblock %}
 {% block head %}<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How much power supply headroom you actually need","datePublished":"2026-09-17","dateModified":"{{ today }}","author":{"@type":"Organization","name":"{{ site }}"},"url":"{{ origin }}{{ base }}{{ path }}"}</script>{% endblock %}
 {% block content %}
 <nav class="crumbs"><a href="{{ base }}">Home</a> › <a href="{{ base }}guide/">Guides</a> › PSU headroom</nav>
@@ -14,9 +14,9 @@
 <h2>3. You will upgrade the card before the PSU</h2>
 <p>A good unit lasts two or three GPU generations. Buying a size up today usually costs less than replacing the supply with the next card.</p>
 <h2>How the calculator estimates it</h2>
-<p>Estimated load = CPU rated power (TDP / PBP, the manufacturer default — sustained turbo can exceed it) + GPU board power + 100 W for the motherboard, memory, storage and fans. Recommended supply = the first common size at or above 1.3× that load. The 1.3 factor is where the three points above meet: it keeps typical gaming load near 60–70% of the rating and leaves room for spikes. It is deliberately conservative for small systems — a 450 W unit is fine for an office PC even if the table says 550 W for a low-end gaming pair.</p>
+<p>Sustained load = the graphics card's measured average gaming power (from TechPowerUp's review of that card) + CPU rated power (TDP / PBP; games usually draw less) + 75 W for the motherboard, memory, storage and fans. A size fits when that load is at most 80% of the label and the card's measured spike plus the rest of the system stays under the label (70% when the review has no spike data). The table shows the safe choice: the smallest size that fits and also meets the higher of the card maker's recommended PSU and TechPowerUp's minimum. Each card's own page also shows a smaller "good unit" size where the measured numbers allow it.</p>
 </div>
-<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Graphics card</th><th>CPU</th><th>Estimated load</th><th>Recommended PSU</th></tr></thead><tbody>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Graphics card</th><th>CPU</th><th>Sustained load</th><th>Safe PSU</th></tr></thead><tbody>
 {% for r in psu_rows %}<tr><td><a href="{{ base }}gpu/{{ r.gpu.slug }}/">{{ r.gpu.short }}</a></td><td><a href="{{ base }}cpu/{{ r.cpu.slug }}/">{{ r.cpu.short }}</a></td><td>{{ r.load }} W</td><td><strong>{{ r.recommended }} W</strong></td></tr>{% endfor %}
 </tbody></table></div>
 <div class="prose">

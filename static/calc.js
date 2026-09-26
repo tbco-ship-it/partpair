@@ -62,7 +62,17 @@
                                    : (pct <= 20 ? 'balanced' : pct <= 40 ? 'gpu-bound' : 'overkill');
     return { side, pct, verdict, label: LABELS[verdict] };
   }
-  function psu(cpu, gpu) { const load = cpu.tdp + gpu.tdp + 100; return { load, rec: TIERS.find(t => t >= load * 1.3) || 1600 }; }
+  // Same rule as psu_pick() in scripts/model.py: measured card draw, <=80% sustained (70% without spike data),
+  // spike under the label, safe = meets the higher of maker's and reviewer's figures, quality = reviewer's minimum only.
+  function psu(cpu, gpu) {
+    const m = gpu.m, load = m.avg_w + cpu.tdp + 75;
+    const spike = m.spike_kind === 'spikes' ? m.spike_w + cpu.tdp + 75 : null, cap = spike === null ? 0.7 : 0.8;
+    const maker = Math.max(m.vendor_psu_w || 0, m.tpu_psu_w || 0), reviewer = m.tpu_psu_w || maker;
+    const fits = t => load <= cap * t && (spike === null || spike <= t);
+    const rec = TIERS.find(t => fits(t) && t >= maker);
+    const q = spike === null ? undefined : TIERS.find(t => fits(t) && t >= reviewer && t < maker);
+    return { load, rec, quality: q, avg: m.avg_w };
+  }
 
 
   // Count-up on the headline number (skipped when the user prefers reduced motion).
@@ -126,7 +136,7 @@
     }
     if (psuOut) {
       const p = psu(cpu, gpu);
-      psuOut.innerHTML = `<section class="sheet balanced"><p class="sheet-label">Recommended power supply</p><div class="sheet-num"><span class="num">${p.rec}</span><span class="pct">W</span></div><p class="sheet-title">Recommended power supply</p><p class="sheet-text">Estimated peak load ${p.load} W: CPU ${cpu.tdp} W, graphics card ${gpu.tdp} W, about 100 W for the rest.</p><p class="sheet-actions"><a class="next" href="${href}">Bottleneck check for this pair</a></p></section>`;
+      psuOut.innerHTML = `<section class="sheet balanced"><p class="sheet-label">Safe power supply</p><div class="sheet-num"><span class="num">${p.rec}</span><span class="pct">W</span></div><p class="sheet-title">Recommended power supply</p><p class="sheet-text">Sustained gaming load ${p.load} W: graphics card ${p.avg} W measured, CPU ${cpu.tdp} W rated, about 75 W for the rest.${p.quality ? ` A good-quality ${p.quality} W unit also covers it.` : ''}</p><p class="sheet-actions"><a class="next" href="${href}">Bottleneck check for this pair</a></p></section>`;
     }
     document.querySelectorAll('.sheet-num .num').forEach(countUp);
     if (first) riseIn();
