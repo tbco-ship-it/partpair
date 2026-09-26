@@ -208,7 +208,8 @@
   "tpu_psu_w": 800,
   "retest": true,
   "avg_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-gaming.png",
-  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png"
+  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png",
+  "orig_review_url": "https://www.techpowerup.com/review/zotac-geforce-rtx-3090-trinity/29.html"
  },
  "RTX 3080": {
   "board_w": 320,
@@ -224,7 +225,8 @@
   "tpu_psu_w": 700,
   "retest": true,
   "avg_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-gaming.png",
-  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png"
+  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png",
+  "orig_review_url": "https://www.techpowerup.com/review/nvidia-geforce-rtx-3080-founders-edition/31.html"
  },
  "RTX 3070 Ti": {
   "board_w": 290,
@@ -253,7 +255,8 @@
   "tpu_psu_w": 600,
   "retest": true,
   "avg_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-gaming.png",
-  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png"
+  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png",
+  "orig_review_url": "https://www.techpowerup.com/review/nvidia-geforce-rtx-3070-founders-edition/31.html"
  },
  "RTX 3060 Ti": {
   "board_w": 200,
@@ -269,7 +272,8 @@
   "tpu_psu_w": 550,
   "retest": true,
   "avg_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-gaming.png",
-  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png"
+  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png",
+  "orig_review_url": "https://www.techpowerup.com/review/nvidia-geforce-rtx-3060-ti-founders-edition/31.html"
  },
  "RTX 3060": {
   "board_w": 170,
@@ -311,7 +315,8 @@
   "tpu_psu_w": null,
   "retest": true,
   "avg_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-gaming.png",
-  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png"
+  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png",
+  "orig_review_url": "https://www.techpowerup.com/review/nvidia-geforce-rtx-2080-ti-founders-edition/31.html"
  },
  "RTX 2070 Super": {
   "board_w": 215,
@@ -340,7 +345,8 @@
   "tpu_psu_w": null,
   "retest": true,
   "avg_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-gaming.png",
-  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png"
+  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png",
+  "orig_review_url": "https://www.techpowerup.com/review/nvidia-geforce-rtx-2060-founders-edition/31.html"
  },
  "GTX 1660 Super": {
   "board_w": 125,
@@ -356,7 +362,8 @@
   "tpu_psu_w": 450,
   "retest": true,
   "avg_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-gaming.png",
-  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png"
+  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png",
+  "orig_review_url": "https://www.techpowerup.com/review/asus-geforce-gtx-1660-super-phoenix/33.html"
  },
  "GTX 1650": {
   "board_w": 75,
@@ -541,7 +548,8 @@
   "tpu_psu_w": 850,
   "retest": true,
   "avg_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-gaming.png",
-  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png"
+  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png",
+  "orig_review_url": "https://www.techpowerup.com/review/amd-radeon-rx-6900-xt/31.html"
  },
  "RX 6800 XT": {
   "board_w": 300,
@@ -557,7 +565,8 @@
   "tpu_psu_w": 650,
   "retest": true,
   "avg_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-gaming.png",
-  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png"
+  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png",
+  "orig_review_url": "https://www.techpowerup.com/review/amd-radeon-rx-6800-xt/31.html"
  },
  "RX 6800": {
   "board_w": 250,
@@ -573,7 +582,8 @@
   "tpu_psu_w": 600,
   "retest": true,
   "avg_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-gaming.png",
-  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png"
+  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png",
+  "orig_review_url": "https://www.techpowerup.com/review/amd-radeon-rx-6800/31.html"
  },
  "RX 6750 XT": {
   "board_w": 250,
@@ -641,7 +651,8 @@
   "tpu_psu_w": null,
   "retest": true,
   "avg_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-gaming.png",
-  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png"
+  "spike_src": "https://tpucdn.com/review/palit-geforce-rtx-4060-dual/images/power-spikes.png",
+  "orig_review_url": "https://www.techpowerup.com/review/amd-radeon-rx-5700-xt/31.html"
  },
  "Arc B580": {
   "board_w": 190,
