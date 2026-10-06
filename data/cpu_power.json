@@ -5,9 +5,8 @@
   "checked": "2026-10-06"
  },
  "Intel Core i3-13100F": {
-  "kind": null,
+  "kind": "mtp",
   "src": "https://www.intel.com/content/www/us/en/products/sku/230576/intel-core-i313100f-processor-12m-cache-up-to-4-50-ghz/specifications.html",
-  "note": "Intel ARK lists base power 58 W and maximum turbo power 110 W; the value on this site (89 W) matches neither",
   "checked": "2026-10-06"
  },
  "Intel Core i5-10400F": {

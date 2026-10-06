@@ -1,6 +1,6 @@
 [
   {"name": "Intel Core i3-12100F", "brand": "Intel", "cores": 4, "threads": 8, "boost": 4.3, "tdp": 89, "socket": "LGA1700", "year": 2022, "game": 58, "work": 34},
-  {"name": "Intel Core i3-13100F", "brand": "Intel", "cores": 4, "threads": 8, "boost": 4.5, "tdp": 89, "socket": "LGA1700", "year": 2023, "game": 60, "work": 36},
+  {"name": "Intel Core i3-13100F", "brand": "Intel", "cores": 4, "threads": 8, "boost": 4.5, "tdp": 110, "socket": "LGA1700", "year": 2023, "game": 60, "work": 36},
   {"name": "Intel Core i5-10400F", "brand": "Intel", "cores": 6, "threads": 12, "boost": 4.3, "tdp": 65, "socket": "LGA1200", "year": 2020, "game": 50, "work": 38},
   {"name": "Intel Core i7-10700K", "brand": "Intel", "cores": 8, "threads": 16, "boost": 5.1, "tdp": 125, "socket": "LGA1200", "year": 2020, "game": 58, "work": 50},
   {"name": "Intel Core i5-11400F", "brand": "Intel", "cores": 6, "threads": 12, "boost": 4.4, "tdp": 65, "socket": "LGA1200", "year": 2021, "game": 56, "work": 42},
