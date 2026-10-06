@@ -1,0 +1,249 @@
+{
+ "Intel Core i3-12100F": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/132223/intel-core-i312100f-processor-12m-cache-up-to-4-30-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i3-13100F": {
+  "kind": null,
+  "src": "https://www.intel.com/content/www/us/en/products/sku/230576/intel-core-i313100f-processor-12m-cache-up-to-4-50-ghz/specifications.html",
+  "note": "Intel ARK lists base power 58 W and maximum turbo power 110 W; the value on this site (89 W) matches neither",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i5-10400F": {
+  "kind": "tdp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/199278/intel-core-i510400f-processor-12m-cache-up-to-4-30-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i7-10700K": {
+  "kind": "tdp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/199335/intel-core-i710700k-processor-16m-cache-up-to-5-10-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i5-11400F": {
+  "kind": "tdp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/212271/intel-core-i511400f-processor-12m-cache-up-to-4-40-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i7-11700K": {
+  "kind": "tdp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/212047/intel-core-i711700k-processor-16m-cache-up-to-5-00-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i5-12400F": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/134587/intel-core-i512400f-processor-18m-cache-up-to-4-40-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i5-12600K": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/134589/intel-core-i512600k-processor-20m-cache-up-to-4-90-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i7-12700K": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/134594/intel-core-i712700k-processor-25m-cache-up-to-5-00-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i9-12900K": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/134599/intel-core-i912900k-processor-30m-cache-up-to-5-20-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i5-13400F": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/230501/intel-core-i513400f-processor-20m-cache-up-to-4-60-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i5-13600K": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/230493/intel-core-i513600k-processor-24m-cache-up-to-5-10-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i7-13700K": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/230500/intel-core-i713700k-processor-30m-cache-up-to-5-40-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i9-13900K": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/230496/intel-core-i913900k-processor-36m-cache-up-to-5-80-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i5-14400F": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/236777/intel-core-i5-processor-14400f-20m-cache-up-to-4-70-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i5-14600K": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/236799/intel-core-i5-processor-14600k-24m-cache-up-to-5-30-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i7-14700K": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/236783/intel-core-i7-processor-14700k-33m-cache-up-to-5-60-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core i9-14900K": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/236773/intel-core-i9-processor-14900k-36m-cache-up-to-6-00-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core Ultra 5 245K": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/241067/intel-core-ultra-5-processor-245k-24m-cache-up-to-5-20-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core Ultra 7 265K": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/241063/intel-core-ultra-7-processor-265k-30m-cache-up-to-5-50-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "Intel Core Ultra 9 285K": {
+  "kind": "mtp",
+  "src": "https://www.intel.com/content/www/us/en/products/sku/241060/intel-core-ultra-9-processor-285k-36m-cache-up-to-5-70-ghz/specifications.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 5 3600": {
+  "kind": null,
+  "src": null,
+  "note": "AMD product page for this model not found at the standard URL (HTTP 404); not compared",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 7 3700X": {
+  "kind": null,
+  "src": null,
+  "note": "AMD product page for this model not found at the standard URL (HTTP 404); not compared",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 5 5500": {
+  "kind": null,
+  "src": null,
+  "note": "AMD product page for this model not found at the standard URL (HTTP 404); not compared",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 5 5600": {
+  "kind": null,
+  "src": null,
+  "note": "AMD product page for this model not found at the standard URL (HTTP 404); not compared",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 5 5600X": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/5000-series/amd-ryzen-5-5600x.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 7 5700X": {
+  "kind": null,
+  "src": null,
+  "note": "AMD product page for this model not found at the standard URL (HTTP 404); not compared",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 7 5700X3D": {
+  "kind": null,
+  "src": null,
+  "note": "AMD product page for this model not found at the standard URL (HTTP 404); not compared",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 7 5800X": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/5000-series/amd-ryzen-7-5800x.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 7 5800X3D": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/5000-series/amd-ryzen-7-5800x3d.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 9 5900X": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/5000-series/amd-ryzen-9-5900x.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 9 5950X": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/5000-series/amd-ryzen-9-5950x.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 5 7600": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/7000-series/amd-ryzen-5-7600.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 5 7600X": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/7000-series/amd-ryzen-5-7600x.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 7 7700": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/7000-series/amd-ryzen-7-7700.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 7 7700X": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/7000-series/amd-ryzen-7-7700x.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 7 7800X3D": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/7000-series/amd-ryzen-7-7800x3d.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 9 7900X": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/7000-series/amd-ryzen-9-7900x.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 9 7950X": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/7000-series/amd-ryzen-9-7950x.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 9 7950X3D": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/7000-series/amd-ryzen-9-7950x3d.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 5 8600G": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/8000-series/amd-ryzen-5-8600g.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 7 8700G": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/8000-series/amd-ryzen-7-8700g.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 5 9600X": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-5-9600x.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 7 9700X": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-7-9700x.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 7 9800X3D": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-7-9800x3d.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 9 9900X": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-9-9900x.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 9 9950X": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-9-9950x.html",
+  "checked": "2026-10-06"
+ },
+ "AMD Ryzen 9 9950X3D": {
+  "kind": "tdp",
+  "src": "https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-9-9950x3d.html",
+  "checked": "2026-10-06"
+ }
+}

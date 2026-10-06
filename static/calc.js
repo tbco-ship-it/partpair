@@ -136,7 +136,7 @@
     }
     if (psuOut) {
       const p = psu(cpu, gpu);
-      psuOut.innerHTML = `<section class="sheet balanced"><p class="sheet-label">Safe power supply</p><div class="sheet-num"><span class="num">${p.rec}</span><span class="pct">W</span></div><p class="sheet-title">Recommended power supply</p><p class="sheet-text">Sustained gaming load ${p.load} W: graphics card ${p.avg} W measured, CPU ${cpu.tdp} W rated, about 75 W for the rest.${p.quality ? ` A good-quality ${p.quality} W unit also covers it.` : ''}</p><p class="sheet-actions"><a class="next" href="${href}">Bottleneck check for this pair</a></p></section>`;
+      psuOut.innerHTML = `<section class="sheet balanced"><p class="sheet-label">Safe power supply</p><div class="sheet-num"><span class="num">${p.rec}</span><span class="pct">W</span></div><p class="sheet-title">Recommended power supply</p><p class="sheet-text">Sustained gaming load ${p.load} W: graphics card ${p.avg} W measured, CPU at ${cpu.pw} ${cpu.tdp} W, about 75 W for the rest.${p.quality ? ` A good-quality ${p.quality} W unit also covers it.` : ''}</p><p class="sheet-actions"><a class="next" href="${href}">Bottleneck check for this pair</a></p></section>`;
     }
     document.querySelectorAll('.sheet-num .num').forEach(countUp);
     if (first) riseIn();

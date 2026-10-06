@@ -46,7 +46,7 @@
     <tr><th>Cores / threads</th><td>{{ c.cores }} / {{ c.threads }}</td></tr>
     <tr><th>Max boost</th><td>{{ c.boost }} GHz</td></tr>
     <tr><th>Socket</th><td>{{ c.socket }}</td></tr>
-    <tr><th>Rated power (TDP / PBP)</th><td>{{ c.tdp }} W <span class="muted">manufacturer default — sustained turbo can be higher</span></td></tr>
+    <tr><th>{{ c.power.label }}</th><td>{{ c.tdp }} W <span class="muted">{{ c.power.note }}{% if c.power_src %} · <a href="{{ c.power_src }}" rel="nofollow noopener" target="_blank">{{ 'Intel ARK' if 'intel.com' in c.power_src else 'AMD' }}</a>{% endif %}</span></td></tr>
     <tr><th>Released</th><td>{{ c.year }}</td></tr>
     <tr><th>Gaming index</th><td>{{ c.game }} / 100</td></tr>
     <tr><th>Multi-core index</th><td>{{ c.work }} / 100</td></tr>
@@ -62,7 +62,7 @@
 </div>
 
 <h2>Power supply</h2>
-<p class="prose">The {{ g.short }} measured {{ g.meas.avg_w }} W average while gaming ({{ g.meas.spike_w }} W {{ 'highest 20 ms spike' if g.meas.spike_kind == 'spikes' else 'peak' }}, <a href="{{ g.meas.review_url }}" rel="nofollow noopener" target="_blank">TechPowerUp</a>). With the {{ c.short }} at its rated {{ c.tdp }} W and about 75 W for the rest of the system, the sustained load is about <strong>{{ p.psu.load }} W</strong>. A <strong>{{ p.psu.recommended }} W</strong> unit is the safe choice{% if p.psu.quality %}; a good-quality {{ p.psu.quality }} W unit also covers the measured draw{% endif %}. Details on the <a href="{{ base }}psu-for/{{ g.slug }}/">{{ g.short }} PSU page</a> or try other pairs in the <a href="{{ base }}psu-calculator/">PSU calculator</a>.</p>
+<p class="prose">The {{ g.short }} measured {{ g.meas.avg_w }} W average while gaming ({{ g.meas.spike_w }} W {{ 'highest 20 ms spike' if g.meas.spike_kind == 'spikes' else 'peak' }}, <a href="{{ g.meas.review_url }}" rel="nofollow noopener" target="_blank">TechPowerUp</a>). With the {{ c.short }} at {{ c.power.phrase }} {{ c.tdp }} W and about 75 W for the rest of the system, the sustained load is about <strong>{{ p.psu.load }} W</strong>. A <strong>{{ p.psu.recommended }} W</strong> unit is the safe choice{% if p.psu.quality %}; a good-quality {{ p.psu.quality }} W unit also covers the measured draw{% endif %}. Details on the <a href="{{ base }}psu-for/{{ g.slug }}/">{{ g.short }} PSU page</a> or try other pairs in the <a href="{{ base }}psu-calculator/">PSU calculator</a>.</p>
 
 <div class="ad-slot"><!-- ad: combo_mid --></div>
 

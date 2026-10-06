@@ -21,7 +21,7 @@
 <tbody>
 {% for i in range(low.rows|length) %}<tr><th>{{ low.rows[i].tier }} W</th>{% for c in (low, mid, high) %}{% set r = c.rows[i] %}<td class="v-{{ r.v }}">{% if r.v == "safe" %}✓ Safe{% elif r.v == "quality" %}✓ Good unit{% else %}✗{% endif %} <span class="muted">{{ r.pct }}%</span></td>{% endfor %}</tr>
 {% endfor %}</tbody></table>
-<p class="muted">Sustained load = card's measured gaming draw + CPU at its rated power (games usually draw less, so this errs high) + 75 W for board, memory, drives and fans: {{ lowc.tdp }} W CPU {{ low.sustained }} W · {{ midc.tdp }} W CPU {{ mid.sustained }} W · {{ highc.tdp }} W CPU {{ high.sustained }} W.{% if not spk %} This card's review has no 20 ms spike data, so we keep the load at or under 70% of the label instead of 80%.{% endif %}</p>
+<p class="muted">Sustained load = card's measured gaming draw + CPU at its TDP (Intel 12th gen and later: maximum turbo power; games usually draw less, so this errs high) + 75 W for board, memory, drives and fans: {{ lowc.tdp }} W CPU {{ low.sustained }} W · {{ midc.tdp }} W CPU {{ mid.sustained }} W · {{ highc.tdp }} W CPU {{ high.sustained }} W.{% if not spk %} This card's review has no 20 ms spike data, so we keep the load at or under 70% of the label instead of 80%.{% endif %}</p>
 <div class="prose">
 <h2>Measured power draw</h2>
 <table class="tbl spec psu-meas"><tbody>

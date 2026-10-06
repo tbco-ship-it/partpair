@@ -11,8 +11,13 @@
   },
   {
     "id": "cpu_specs",
-    "label": "CPU specifications: Intel and AMD published specifications",
+    "label": "CPU core counts, clocks and sockets: Intel and AMD published specifications",
     "checked": null
+  },
+  {
+    "id": "cpu_power",
+    "label": "CPU power figures: Intel ARK and AMD product pages (41 of 48 processors compared; each pairing page names the figure and links its page)",
+    "checked": "2026-10-06"
   },
   {
     "id": "indexes",

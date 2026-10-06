@@ -20,14 +20,29 @@ ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
 SITE = "PCPairs"
 
+# How each CPU's power figure is described. `kind` comes from data/cpu_power.json: what the manufacturer's page calls
+# the number we use. None = the number was not confirmed against a manufacturer page, so we claim nothing about it.
+POWER_KINDS = {
+    "tdp": {"label": "TDP", "phrase": "its TDP of",
+            "note": "manufacturer-published TDP — sustained turbo can be higher"},
+    "mtp": {"label": "Maximum turbo power (MTP)", "phrase": "its maximum turbo power of",
+            "note": "Intel's published maximum sustained turbo power, above its base power; the PSU estimate uses it, so it errs high"},
+    None: {"label": "Power used for the PSU estimate", "phrase": "a power figure of",
+           "note": "not confirmed against a manufacturer page"},
+}
+
 
 def load():
     cpus = json.loads((ROOT / "data/cpus.json").read_text())
     gpus = json.loads((ROOT / "data/gpus.json").read_text())
     measured = json.loads((ROOT / "data/psu_measured.json").read_text())
+    power = json.loads((ROOT / "data/cpu_power.json").read_text())
     for c in cpus:
         c["slug"] = slugify(c["name"])
         c["short"] = short(c["name"])
+        p = power[c["name"]]  # every CPU must have a power row, even when its kind is unconfirmed
+        c["power"] = POWER_KINDS[p["kind"]]
+        c["power_src"] = p["src"]
     for g in gpus:
         g["slug"] = slugify(g["name"])
         g["short"] = short(g["name"])
@@ -146,7 +161,7 @@ def main():
 
     # Data blob for the browser calculator
     blob = {
-        "cpus": [{"slug": c["slug"], "name": c["name"], "game": c["game"], "tdp": c["tdp"], "socket": c["socket"]} for c in cpus],
+        "cpus": [{"slug": c["slug"], "name": c["name"], "game": c["game"], "tdp": c["tdp"], "pw": c["power"]["phrase"], "socket": c["socket"]} for c in cpus],
         "gpus": [{"slug": g["slug"], "name": g["name"], "s1440": g["s1440"], "tdp": g["tdp"],
                   "m": {k: g["meas"][k] for k in ("avg_w", "spike_w", "spike_kind", "vendor_psu_w", "tpu_psu_w")}} for g in gpus],
     }
