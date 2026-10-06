@@ -38,6 +38,17 @@ def load():
     return cpus, gpus
 
 
+def load_sources():
+    """Where each kind of number on the site comes from and when someone last checked it against that source.
+    `checked` is null when no check is on record; the footer then shows no date. It is the date of the last
+    real check, never the build date."""
+    sources = json.loads((ROOT / "data/sources.json").read_text())
+    for s in sources:
+        if s["checked"] is not None and date.fromisoformat(s["checked"]) > date.today():
+            raise SystemExit(f"data/sources.json: {s['id']} checked date {s['checked']} is in the future")
+    return sources
+
+
 def combo(cpu, gpu):
     results = [bottleneck(cpu["game"], gpu["s1440"], r[0]) for r in RESOLUTIONS]
     return {
@@ -110,6 +121,7 @@ def main():
     origin = args.origin.rstrip("/")
 
     cpus, gpus = load()
+    sources = load_sources()
     # Content hash of static assets → cache-busting query on every asset URL.
     h = hashlib.md5()
     for f in sorted((ROOT / "static").glob("*")):
@@ -117,7 +129,7 @@ def main():
     asset_v = h.hexdigest()[:8]
     env = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=select_autoescape(["html"]))
     env.globals.update(site=SITE, base=base, origin=origin, today=date.today().isoformat(), adsense_pub=args.adsense_pub, v=asset_v,
-                       resolutions=RESOLUTIONS, cpus=cpus, gpus=gpus)
+                       resolutions=RESOLUTIONS, cpus=cpus, gpus=gpus, sources=sources)
 
     if DIST.exists():
         shutil.rmtree(DIST)

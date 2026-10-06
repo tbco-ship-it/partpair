@@ -1,0 +1,22 @@
+[
+  {
+    "id": "gpu_power",
+    "label": "Measured graphics-card power (gaming average, spikes, minimum PSU): TechPowerUp reviews",
+    "checked": "2026-09-26"
+  },
+  {
+    "id": "vendor_specs",
+    "label": "Board power and maker-recommended PSU: NVIDIA, AMD and Intel product pages",
+    "checked": "2026-09-26"
+  },
+  {
+    "id": "cpu_specs",
+    "label": "CPU specifications: Intel and AMD published specifications",
+    "checked": null
+  },
+  {
+    "id": "indexes",
+    "label": "Performance indexes and bottleneck scores: PCPairs estimates assembled from published reviews, not measurements",
+    "checked": null
+  }
+]
